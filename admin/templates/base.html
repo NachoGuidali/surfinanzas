@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>{% block titulo %}Panel{% endblock %} · Sur Finanzas</title>
+<link rel="icon" href="{{ url_for('static', filename='favicon-32.png') }}" type="image/png" />
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}" />
+</head>
+<body class="{% block clase_body %}{% endblock %}">
+
+{% if usuario %}
+<header class="barra">
+  <a class="marca" href="{{ url_for('lista') }}">
+    <img src="{{ url_for('static', filename='logo-sur.png') }}" alt="Sur Finanzas" />
+    <span>Panel</span>
+  </a>
+  <div class="barra-acciones">
+    <a class="btn btn-fantasma" href="{{ url_for('lista') }}">Notas</a>
+    <a class="btn btn-fantasma" href="{{ url_for('mensajes') }}">Mensajes</a>
+    <a class="btn btn-fantasma" href="{{ url_for('simulador') }}">Simulador</a>
+    <a class="btn btn-fantasma" href="{{ url_sitio }}/blog/index.html" target="_blank" rel="noopener">Ver el blog &nearr;</a>
+    <form method="post" action="{{ url_for('regenerar') }}">
+      <input type="hidden" name="csrf" value="{{ csrf_token() }}" />
+      <button class="btn btn-fantasma" type="submit" title="Rehace el HTML del sitio a partir de los .md">Regenerar sitio</button>
+    </form>
+    <span class="usuario" title="Sesión iniciada">{{ nombre_usuario }}</span>
+    <form method="post" action="{{ url_for('logout') }}">
+      <input type="hidden" name="csrf" value="{{ csrf_token() }}" />
+      <button class="btn btn-fantasma" type="submit">Salir</button>
+    </form>
+  </div>
+</header>
+{% endif %}
+
+<main class="contenido">
+  {% with mensajes = get_flashed_messages(with_categories=true) %}
+    {% if mensajes %}
+      <div class="avisos">
+        {% for categoria, texto in mensajes %}
+          <div class="aviso aviso-{{ categoria }}" role="status">{{ texto }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block contenido %}{% endblock %}
+</main>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Estamos trabajando — Sur Finanzas</title>
+<meta name="description" content="Sur Finanzas está realizando mejoras. Volvemos muy pronto.">
+<link rel="icon" href="assets/branding/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/branding/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/branding/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#0b0b0f;
+    --bg2:#10131a;
+    --card:rgba(255,255,255,.03);
+    --border:rgba(255,255,255,.08);
+    --text:#f5f6f8;
+    --muted:#9aa3b2;
+    --brand:#09FED5;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    overflow:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+
+/* -----------------------------
+   GRID
+------------------------------*/
+
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:radial-gradient(circle at center,#000 45%,transparent 100%);
+}
+
+
+/* -----------------------------
+   BLOBS
+------------------------------*/
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.45;
+}
+
+.blob1{
+    width:520px;
+    height:520px;
+    background:#09FED5;
+    left:-180px;
+    top:-150px;
+    animation:blob1 14s ease-in-out infinite;
+}
+
+.blob2{
+    width:420px;
+    height:420px;
+    background:#09FED5;
+    right:-140px;
+    bottom:-120px;
+    opacity:.22;
+    animation:blob2 18s ease-in-out infinite;
+}
+
+@keyframes blob1{
+
+0%,100%{
+transform:translate(0,0) scale(1);
+}
+
+50%{
+transform:translate(80px,40px) scale(1.15);
+}
+
+}
+
+@keyframes blob2{
+
+0%,100%{
+transform:translate(0,0) scale(1);
+}
+
+50%{
+transform:translate(-60px,-30px) scale(.9);
+}
+
+}
+
+
+
+/* -----------------------------
+   PARTICULAS
+------------------------------*/
+
+.particle{
+
+position:absolute;
+width:3px;
+height:3px;
+border-radius:50%;
+background:var(--brand);
+box-shadow:0 0 12px var(--brand);
+
+animation:float linear infinite;
+
+}
+
+@keyframes float{
+
+from{
+
+transform:translateY(110vh);
+opacity:0;
+
+}
+
+15%{
+
+opacity:1;
+
+}
+
+to{
+
+transform:translateY(-20vh);
+opacity:0;
+
+}
+
+}
+
+
+/* -----------------------------
+   CARD
+------------------------------*/
+
+.card{
+
+position:relative;
+z-index:5;
+
+padding:70px 80px;
+
+width:min(720px,90vw);
+
+text-align:center;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+backdrop-filter:blur(20px);
+
+border-radius:28px;
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.45),
+0 0 60px rgba(9,254,213,.08);
+
+animation:appear 1.2s cubic-bezier(.22,1,.36,1);
+
+}
+
+@keyframes appear{
+
+from{
+
+opacity:0;
+transform:translateY(35px) scale(.96);
+
+}
+
+to{
+
+opacity:1;
+transform:none;
+
+}
+
+}
+
+.small{
+
+color:var(--brand);
+
+text-transform:uppercase;
+
+letter-spacing:4px;
+
+font-size:.78rem;
+
+font-weight:600;
+
+margin-bottom:20px;
+
+}
+
+h1{
+
+font-size:clamp(2.3rem,6vw,4.8rem);
+
+line-height:1.05;
+
+font-weight:700;
+
+letter-spacing:-2px;
+
+background:linear-gradient(
+90deg,
+#ffffff 0%,
+#09FED5 50%,
+#ffffff 100%
+);
+
+background-size:220% auto;
+
+-webkit-background-clip:text;
+color:transparent;
+
+animation:
+gradientMove 8s ease infinite,
+breath 4s ease-in-out infinite;
+
+}
+
+@keyframes gradientMove{
+
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+@keyframes breath{
+
+0%,100%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.015);
+
+}
+
+}
+
+.subtitle{
+
+margin-top:24px;
+
+font-size:1.05rem;
+
+line-height:1.8;
+
+color:var(--muted);
+
+}
+
+.line{
+
+margin:42px auto 0;
+
+width:220px;
+
+height:3px;
+
+border-radius:999px;
+
+background:linear-gradient(
+90deg,
+transparent,
+var(--brand),
+transparent
+);
+
+box-shadow:
+0 0 25px var(--brand);
+
+animation:line 3s ease infinite;
+
+}
+
+@keyframes line{
+
+0%,100%{
+
+width:180px;
+opacity:.7;
+
+}
+
+50%{
+
+width:280px;
+opacity:1;
+
+}
+
+}
+
+
+/* -----------------------------
+   CIRCULO
+------------------------------*/
+
+.ring{
+
+position:absolute;
+
+left:50%;
+top:50%;
+
+transform:translate(-50%,-50%);
+
+width:720px;
+height:720px;
+
+border-radius:50%;
+
+border:1px solid rgba(9,254,213,.05);
+
+animation:rotate 60s linear infinite;
+
+}
+
+.ring:before{
+
+content:"";
+
+position:absolute;
+
+inset:45px;
+
+border-radius:50%;
+
+border:1px solid rgba(9,254,213,.05);
+
+}
+
+@keyframes rotate{
+
+from{transform:translate(-50%,-50%) rotate(0deg);}
+to{transform:translate(-50%,-50%) rotate(360deg);}
+
+}
+
+
+/* -----------------------------
+RESPONSIVE
+------------------------------*/
+
+@media(max-width:700px){
+
+.card{
+
+padding:50px 30px;
+
+}
+
+.subtitle{
+
+font-size:.95rem;
+
+}
+
+}
+
+
+.mant-logo{
+    width:min(15rem,60vw);
+    height:auto;
+    margin:0 auto 1.75rem;
+    display:block;
+    animation:mant-logo-in .9s cubic-bezier(.21,.9,.32,1) both;
+}
+@keyframes mant-logo-in{
+    from{opacity:0;transform:translateY(-12px) scale(.96)}
+    to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion: reduce){ .mant-logo{ animation:none } }
+</style>
+</head>
+
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<div class="ring"></div>
+
+<div class="card">
+
+<img class="mant-logo" src="assets/branding/logo-sur.png" alt="Sur Finanzas" width="560" height="217">
+
+<h1>
+Estamos trabajando<br>
+para volver
+</h1>
+
+<p class="subtitle">
+Estamos realizando mejoras para brindarte una mejor experiencia.
+Volveremos a estar disponibles muy pronto.
+</p>
+
+<div class="line"></div>
+
+</div>
+
+<script>
+
+for(let i=0;i<55;i++){
+
+const p=document.createElement("div");
+
+p.className="particle";
+
+p.style.left=Math.random()*100+"vw";
+
+p.style.animationDuration=(10+Math.random()*12)+"s";
+
+p.style.animationDelay=(-Math.random()*20)+"s";
+
+p.style.opacity=Math.random();
+
+document.body.appendChild(p);
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Secretos y datos locales del panel — nunca se versionan
+admin/.env
+admin/usuarios.json
+blog/_posts/_papelera/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Basura de Windows/WSL al descargar archivos
+*:Zone.Identifier
+Thumbs.db
+.DS_Store
+
+# Paquetes de deploy viejos
+deploy-*.zip
+
+# Mensajes recibidos por el formulario (datos de personas)
+datos/

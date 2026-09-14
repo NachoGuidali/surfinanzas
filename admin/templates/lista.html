@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block titulo %}Notas{% endblock %}
+
+{% block contenido %}
+<div class="encabezado-pagina">
+  <div>
+    <h1>Notas del blog</h1>
+    <p class="tenue">{{ publicadas }} publicada{{ 's' if publicadas != 1 }}{% if borradores %} · {{ borradores }} borrador{{ 'es' if borradores != 1 }}{% endif %}</p>
+  </div>
+  <a class="btn btn-marca" href="{{ url_for('nueva') }}">+ Nota nueva</a>
+</div>
+
+{% if not notas %}
+  <div class="vacio">
+    <p class="tenue">Todavía no hay ninguna nota.</p>
+    <a class="btn btn-marca" href="{{ url_for('nueva') }}" style="margin-top:1.25rem;">Escribir la primera</a>
+  </div>
+{% else %}
+  <ul class="notas">
+    {% for nota in notas %}
+      <li class="nota">
+        <div class="nota-tapa">
+          {% if nota.imagen %}
+            <img src="{{ url_for('media', nombre=nota.imagen|nombre_archivo) }}" alt="" loading="lazy" onerror="this.remove()" />
+          {% endif %}
+        </div>
+        <div class="nota-datos">
+          <div class="nota-chips">
+            {% if nota.borrador %}
+              <span class="chip chip-borrador">Borrador</span>
+            {% else %}
+              <span class="chip chip-vivo">Publicada</span>
+            {% endif %}
+            {% if nota.destacado %}<span class="chip chip-destacado">Destacada</span>{% endif %}
+            <span class="chip">{{ nota.categoria }}</span>
+          </div>
+          <a class="nota-titulo" href="{{ url_for('editar', archivo=nota.archivo) }}">{{ nota.titulo }}</a>
+          <p class="tenue chico">{{ nota.resumen or "Sin resumen" }}</p>
+          <p class="tenue chico nota-meta">
+            {{ nota.fecha.strftime('%d/%m/%Y') }} ·
+            {{ nota.palabras }} palabras ·
+            <code>/blog/{{ nota.slug }}.html</code>
+          </p>
+        </div>
+        <div class="nota-acciones">
+          <a class="btn btn-fantasma" href="{{ url_for('editar', archivo=nota.archivo) }}">Editar</a>
+          {% if not nota.borrador %}
+            <a class="btn btn-fantasma" href="{{ url_sitio }}/blog/{{ nota.slug }}.html" target="_blank" rel="noopener">Ver &nearr;</a>
+          {% endif %}
+          <form method="post" action="{{ url_for('eliminar') }}"
+                data-confirmar="¿Seguro que querés eliminar «{{ nota.titulo|e }}»? Se mueve a la papelera.">
+            <input type="hidden" name="csrf" value="{{ csrf_token() }}" />
+            <input type="hidden" name="archivo" value="{{ nota.archivo }}" />
+            <button class="btn btn-peligro" type="submit">Eliminar</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='admin.js') }}" defer></script>
+{% endblock %}

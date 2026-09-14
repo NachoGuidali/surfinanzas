@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block titulo %}Error {{ codigo }}{% endblock %}
+{% block contenido %}
+<div class="vacio">
+  <h1 style="font-size:3rem;">{{ codigo }}</h1>
+  <p class="tenue">{{ mensaje or "Algo no salió como esperábamos." }}</p>
+  <a class="btn btn-marca" href="{{ url_for('lista') }}" style="margin-top:1.5rem;">Volver al panel</a>
+</div>
+{% endblock %}

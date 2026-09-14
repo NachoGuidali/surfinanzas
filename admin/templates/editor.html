@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block titulo %}{{ 'Nota nueva' if es_nueva else 'Editar nota' }}{% endblock %}
+
+{% block contenido %}
+<form method="post" action="{{ url_for('guardar') }}" id="form-nota" class="editor"
+      data-url-preview="{{ url_for('preview') }}"
+      data-url-imagen="{{ url_for('subir_imagen') }}"
+      data-url-media="{{ url_for('media', nombre='__X__') }}">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}" />
+  <input type="hidden" name="archivo_original" value="{{ nota.archivo }}" />
+  <input type="hidden" name="accion" id="accion" value="borrador" />
+
+  <div class="encabezado-pagina">
+    <div>
+      <a class="volver" href="{{ url_for('lista') }}">&larr; Todas las notas</a>
+      <h1>{{ 'Nota nueva' if es_nueva else 'Editar nota' }}</h1>
+    </div>
+    <div class="acciones-guardar">
+      <button class="btn btn-fantasma" type="submit" value="borrador" data-accion="borrador">Guardar borrador</button>
+      <button class="btn btn-marca" type="submit" value="publicar" data-accion="publicar">Publicar</button>
+    </div>
+  </div>
+
+  <div class="editor-grid">
+
+    <section class="panel">
+      <div class="campo">
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" type="text" required maxlength="140"
+               value="{{ nota.titulo }}" placeholder="Cómo funciona el descuento de cheques" />
+      </div>
+
+      <div class="campo">
+        <label for="resumen">Resumen <span class="tenue">— se ve en la tarjeta y al compartir</span></label>
+        <textarea id="resumen" name="resumen" rows="2" maxlength="300"
+                  placeholder="Una o dos frases que inviten a leer la nota.">{{ nota.resumen }}</textarea>
+        <p class="ayuda"><span id="cuenta-resumen">0</span>/300</p>
+      </div>
+
+      <div class="campo">
+        <label for="cuerpo">Contenido</label>
+        <div class="barra-md" role="toolbar" aria-label="Formato">
+          <button type="button" class="btn-md" data-md="negrita" title="Negrita"><b>B</b></button>
+          <button type="button" class="btn-md" data-md="cursiva" title="Cursiva"><i>I</i></button>
+          <button type="button" class="btn-md" data-md="h2" title="Subtítulo">H2</button>
+          <button type="button" class="btn-md" data-md="h3" title="Subtítulo menor">H3</button>
+          <button type="button" class="btn-md" data-md="lista" title="Lista">&bull; Lista</button>
+          <button type="button" class="btn-md" data-md="numerada" title="Lista numerada">1. Lista</button>
+          <button type="button" class="btn-md" data-md="cita" title="Cita destacada">&ldquo; Cita</button>
+          <button type="button" class="btn-md" data-md="link" title="Enlace">Link</button>
+          <button type="button" class="btn-md" data-md="imagen" title="Insertar imagen">Imagen</button>
+          <span class="separador-md"></span>
+          <button type="button" class="btn-md" id="ver-preview" aria-pressed="false">Vista previa</button>
+        </div>
+        <textarea id="cuerpo" name="cuerpo" rows="26" spellcheck="true"
+                  placeholder="Escribí acá. Podés usar Markdown: **negrita**, ## subtítulo, - listas.">{{ nota.cuerpo }}</textarea>
+        <p class="ayuda"><span id="cuenta-palabras">0</span> palabras · <span id="cuenta-minutos">1</span> min de lectura</p>
+      </div>
+
+      <div class="panel-preview" id="preview" hidden>
+        <p class="etiqueta-preview">Vista previa</p>
+        <div class="prose" id="preview-html"></div>
+      </div>
+    </section>
+
+    <aside class="panel lateral">
+      <div class="campo">
+        <label for="fecha">Fecha</label>
+        <input id="fecha" name="fecha" type="date" required value="{{ nota.fecha.isoformat() }}" />
+      </div>
+
+      <div class="campo">
+        <label for="categoria">Categoría</label>
+        <input id="categoria" name="categoria" type="text" list="lista-categorias"
+               value="{{ nota.categoria }}" placeholder="Cheques" maxlength="40" />
+        <datalist id="lista-categorias">
+          {% for c in categorias %}<option value="{{ c }}"></option>{% endfor %}
+        </datalist>
+        <p class="ayuda">Genera el filtro del listado. Reusá las que ya existen.</p>
+      </div>
+
+      <div class="campo">
+        <label for="autor">Autor</label>
+        <input id="autor" name="autor" type="text" value="{{ nota.autor }}" maxlength="60" />
+      </div>
+
+      <div class="campo">
+        <label for="slug">URL</label>
+        <div class="campo-url">
+          <span class="tenue chico">/blog/</span>
+          <input id="slug" name="slug" type="text" value="{{ nota.slug }}"
+                 placeholder="se-arma-sola-del-titulo" maxlength="80" />
+          <span class="tenue chico">.html</span>
+        </div>
+        <p class="ayuda" id="ayuda-slug">Si la dejás vacía se arma sola con el título.</p>
+      </div>
+
+      <div class="campo">
+        <label>Portada</label>
+        <div class="portada" id="portada">
+          <img id="portada-img" src="{% if nota.imagen %}{{ url_for('media', nombre=nota.imagen|nombre_archivo) }}{% endif %}"
+               alt="" {% if not nota.imagen %}hidden{% endif %} onerror="this.hidden=true" />
+          <p class="tenue chico" id="portada-vacia" {% if nota.imagen %}hidden{% endif %}>
+            Sin portada. Se usa un fondo de marca con el isotipo.
+          </p>
+        </div>
+        <input type="hidden" name="imagen" id="imagen" value="{{ nota.imagen }}" />
+        <div class="acciones-portada">
+          <label class="btn btn-fantasma" for="archivo-portada">Subir imagen</label>
+          <input type="file" id="archivo-portada" accept="image/jpeg,image/png,image/webp" hidden />
+          <button type="button" class="btn btn-fantasma" id="quitar-portada" {% if not nota.imagen %}hidden{% endif %}>Quitar</button>
+        </div>
+        {% if imagenes %}
+          <details class="galeria">
+            <summary>Usar una imagen ya subida</summary>
+            <div class="galeria-grid">
+              {% for img in imagenes %}
+                <button type="button" class="galeria-item" data-ruta="{{ img }}">
+                  <img src="{{ url_for('media', nombre=img|nombre_archivo) }}" alt="{{ img }}" loading="lazy" onerror="this.parentElement.remove()" />
+                </button>
+              {% endfor %}
+            </div>
+          </details>
+        {% endif %}
+        <p class="ayuda">JPG, PNG o WEBP. Se redimensiona a 1600px de ancho.</p>
+      </div>
+
+      <div class="campo">
+        <label class="checkbox">
+          <input type="checkbox" name="destacado" {% if nota.destacado %}checked{% endif %} />
+          <span>Nota destacada <span class="tenue">— va grande arriba de todo</span></span>
+        </label>
+      </div>
+
+      <div class="estado-nota">
+        {% if nota.borrador or es_nueva %}
+          <span class="chip chip-borrador">Borrador</span>
+          <p class="tenue chico">No se ve en el sitio hasta que le des a Publicar.</p>
+        {% else %}
+          <span class="chip chip-vivo">Publicada</span>
+          <p class="tenue chico">Ya está en vivo. Al guardar como borrador se baja del sitio.</p>
+        {% endif %}
+      </div>
+    </aside>
+
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='admin.js') }}" defer></script>
+{% endblock %}

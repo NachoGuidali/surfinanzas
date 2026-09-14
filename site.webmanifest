@@ -1,0 +1,28 @@
+{
+  "name": "Sur Finanzas",
+  "short_name": "Sur Finanzas",
+  "description": "Compra y venta de oro, cheques y Echeq, microcréditos, medios de pago y cobranzas, cajas de seguridad y transporte de caudales.",
+  "lang": "es-AR",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0b0b0f",
+  "theme_color": "#0b0b0f",
+  "icons": [
+    {
+      "src": "/assets/branding/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/branding/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/branding/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

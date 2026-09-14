@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block titulo %}Simulador{% endblock %}
+
+{% macro val(campo) -%}
+{{ config.get(campo ~ '_texto', config.get(campo, '')) }}
+{%- endmacro %}
+
+{% block contenido %}
+<div class="encabezado-pagina">
+  <div>
+    <h1>Simulador de cuotas</h1>
+    <p class="tenue">{{ servicio.nombre }} · se ve en <code>/servicios/{{ archivo }}</code></p>
+  </div>
+  <a class="btn btn-fantasma" href="{{ url_sitio }}/servicios/{{ archivo }}#simulador"
+     target="_blank" rel="noopener">Ver en el sitio &nearr;</a>
+</div>
+
+{% if disponibles|length > 1 %}
+  <div class="tag-list-admin">
+    {% for s in disponibles %}
+      <a class="chip-filtro {% if s.archivo == archivo %}activo{% endif %}"
+         href="{{ url_for('simulador', archivo=s.archivo) }}">{{ s.nombre }}</a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="aviso aviso-error" role="note">
+  Esta tasa se muestra en la web a cualquiera que entre. Cargá la que realmente
+  cobran: los valores que se ven acá son los que va a ver un cliente.
+</div>
+
+<form method="post" class="editor" id="form-simulador"
+      data-tasa-actual="{{ config.tasa_mensual }}">
+  <input type="hidden" name="csrf" value="{{ csrf_token() }}" />
+
+  <div class="editor-grid">
+    <section class="panel">
+
+      <div class="campo">
+        <label for="tasa">Tasa mensual</label>
+        <div class="campo-url">
+          <input id="tasa" name="tasa_mensual" type="text" inputmode="decimal" required
+                 value="{{ config.get('tasa_texto', (config.tasa_mensual * 100)|round(4)) }}" />
+          <span class="tenue">% por mes</span>
+        </div>
+        <p class="ayuda">Usá punto o coma para los decimales. Por ejemplo <code>7,5</code> para 7,5% mensual.</p>
+      </div>
+
+      <div class="grid-dos">
+        <div class="campo">
+          <label for="minimo">Monto mínimo</label>
+          <input id="minimo" name="minimo" type="text" inputmode="numeric" required value="{{ val('minimo') }}" />
+        </div>
+        <div class="campo">
+          <label for="maximo">Monto máximo</label>
+          <input id="maximo" name="maximo" type="text" inputmode="numeric" required value="{{ val('maximo') }}" />
+        </div>
+      </div>
+
+      <div class="grid-dos">
+        <div class="campo">
+          <label for="paso">Paso del deslizador</label>
+          <input id="paso" name="paso" type="text" inputmode="numeric" required value="{{ val('paso') }}" />
+          <p class="ayuda">De cuánto en cuánto se mueve.</p>
+        </div>
+        <div class="campo">
+          <label for="inicial">Monto que aparece al abrir</label>
+          <input id="inicial" name="inicial" type="text" inputmode="numeric" required value="{{ val('inicial') }}" />
+        </div>
+      </div>
+
+      <div class="grid-dos">
+        <div class="campo">
+          <label for="plazos">Plazos (meses)</label>
+          <input id="plazos" name="plazos" type="text" required
+                 value="{{ config.get('plazos_texto', config.plazos|join(', ')) }}" />
+          <p class="ayuda">Separados por comas. Hasta 10.</p>
+        </div>
+        <div class="campo">
+          <label for="plazo_inicial">Plazo destacado</label>
+          <input id="plazo_inicial" name="plazo_inicial" type="text" inputmode="numeric" required
+                 value="{{ val('plazo_inicial') }}" />
+          <p class="ayuda">Tiene que ser uno de los de al lado.</p>
+        </div>
+      </div>
+
+      <button class="btn btn-marca ancho" type="submit">Guardar y publicar</button>
+      <p class="ayuda centro" style="margin-top:0.75rem;">
+        Al guardar se regenera el sitio: el cambio queda en vivo enseguida.
+      </p>
+    </section>
+
+    <aside class="panel lateral">
+      <p class="eyebrow-admin">Vista previa</p>
+      <p class="tenue chico">Así queda la cuota con lo que estás cargando.</p>
+
+      <div class="previa-sim" id="previa">
+        <div class="previa-fila">
+          <span class="tenue chico">Monto</span>
+          <strong id="pv-monto">—</strong>
+        </div>
+        <div class="previa-fila">
+          <span class="tenue chico">Plazo</span>
+          <strong id="pv-plazo">—</strong>
+        </div>
+        <hr class="separador" />
+        <div class="previa-fila destacada">
+          <span class="tenue chico">Cuota mensual</span>
+          <strong id="pv-cuota">—</strong>
+        </div>
+        <div class="previa-fila">
+          <span class="tenue chico">Total a pagar</span>
+          <strong id="pv-total">—</strong>
+        </div>
+        <div class="previa-fila">
+          <span class="tenue chico">Costo del crédito</span>
+          <strong id="pv-costo">—</strong>
+        </div>
+      </div>
+      <p class="ayuda">Se recalcula mientras escribís. No se guarda hasta que apretás el botón.</p>
+    </aside>
+  </div>
+</form>
+
+{% if ejemplos and ejemplos.filas %}
+  <section class="panel" style="margin-top:1.25rem;">
+    <p class="eyebrow-admin">Cuotas con la configuración guardada</p>
+    <div class="tabla-scroll">
+      <table class="tabla-sim">
+        <thead>
+          <tr>
+            <th>Monto</th>
+            {% for p in ejemplos.plazos %}<th>{{ p }} meses</th>{% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for fila in ejemplos.filas %}
+            <tr>
+              <th>$ {{ "{:,}".format(fila.monto)|replace(",", ".") }}</th>
+              {% for c in fila.celdas %}
+                <td>
+                  <strong>$ {{ "{:,}".format(c.cuota)|replace(",", ".") }}</strong>
+                  <span class="tenue chico">total $ {{ "{:,}".format(c.total)|replace(",", ".") }}</span>
+                </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='admin.js') }}" defer></script>
+{% endblock %}

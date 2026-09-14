@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block titulo %}Mensajes{% endblock %}
+
+{% block contenido %}
+<div class="encabezado-pagina">
+  <div>
+    <h1>Mensajes del formulario</h1>
+    <p class="tenue">
+      {{ total }} recibido{{ 's' if total != 1 }}{% if area_activa %} · filtrando por «{{ area_activa }}»{% endif %}
+    </p>
+  </div>
+</div>
+
+{% if not smtp_ok %}
+  <div class="aviso aviso-error" role="status">
+    El envío por mail no está configurado (falta <code>SMTP_HOST</code> en <code>admin/.env</code>).
+    Los mensajes se siguen guardando y se ven acá, pero nadie recibe el aviso por correo.
+  </div>
+{% endif %}
+
+{% if areas %}
+  <div class="tag-list-admin">
+    <a class="chip-filtro {% if not area_activa %}activo{% endif %}" href="{{ url_for('mensajes') }}">Todas</a>
+    {% for a in areas %}
+      <a class="chip-filtro {% if area_activa == a %}activo{% endif %}"
+         href="{{ url_for('mensajes', area=a) }}">{{ a }}</a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if not mensajes %}
+  <div class="vacio">
+    <p class="tenue">
+      {% if area_activa %}No hay mensajes en esa área.{% else %}Todavía no llegó ningún mensaje.{% endif %}
+    </p>
+  </div>
+{% else %}
+  <ul class="mensajes">
+    {% for m in mensajes %}
+      <li class="mensaje">
+        <div class="mensaje-cab">
+          <div>
+            <strong>{{ m.nombre }}</strong>
+            <a class="mensaje-mail" href="mailto:{{ m.email }}?subject=Re:%20tu%20consulta%20en%20Sur%20Finanzas">{{ m.email }}</a>
+          </div>
+          <div class="mensaje-meta">
+            <span class="chip">{{ m.area }}</span>
+            <time class="tenue chico">{{ m.fecha.replace('T', ' ')[:16] }}</time>
+          </div>
+        </div>
+        <p class="mensaje-texto">{{ m.mensaje }}</p>
+        <div class="mensaje-pie">
+          <a class="btn btn-fantasma" href="mailto:{{ m.email }}?subject=Re:%20tu%20consulta%20en%20Sur%20Finanzas">Responder</a>
+          <span class="tenue chico">IP {{ m.ip }}</span>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='admin.js') }}" defer></script>
+{% endblock %}
