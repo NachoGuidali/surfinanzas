@@ -13,13 +13,19 @@ Si cambia el teléfono, el dominio o el canal, se cambia SOLO acá y se corre:
 
 SITE = "https://www.surfinanzas.com.ar"
 
-# --- Teléfono --------------------------------------------------------------
+# --- WhatsApp de atención -------------------------------------------------
+# Es el de todos los botones e íconos de WhatsApp del sitio.
+WA_NUMERO = "5491164827010"             # para wa.me: sin +, ni espacios, ni guiones
+
+_WA_TEXTO = "?text=Hola%20Sur%20Finanzas%2C%20quiero%20hacer%20una%20consulta."
+WA = f"https://wa.me/{WA_NUMERO}{_WA_TEXTO}"
+
+# --- Teléfono de la sucursal -----------------------------------------------
+# Se muestra en los datos de la sucursal. En Contacto, el botón de la
+# sucursal también lleva a este número.
 TEL_DISPLAY = "+54 9 11 3396-1599"      # como se muestra en pantalla
 TEL_E164 = "+5491133961599"             # para los enlaces tel:
-WA_NUMERO = "5491133961599"             # para wa.me: sin +, ni espacios, ni guiones
-
-WA = (f"https://wa.me/{WA_NUMERO}"
-      "?text=Hola%20Sur%20Finanzas%2C%20quiero%20hacer%20una%20consulta.")
+WA_SUCURSAL = f"https://wa.me/{TEL_E164.lstrip('+')}{_WA_TEXTO}"
 
 # --- Canal de WhatsApp -----------------------------------------------------
 CANAL_URL = "https://whatsapp.com/channel/0029Vb8YV1u7YSdCLBxDnP3V"

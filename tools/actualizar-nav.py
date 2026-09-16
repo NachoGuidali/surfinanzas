@@ -29,7 +29,8 @@ BLOQUES = {
         "canal-tarjeta": lambda: T.canal_tarjeta(),
         "redes": lambda: T.redes_banner(),
         "sucursal": lambda: T.sucursal_block(
-            eyebrow="La sucursal", cta="Hablanos", fondo="normal"),
+            eyebrow="La sucursal", cta="Hablanos", fondo="normal",
+            wa=T.WA_SUCURSAL),
     },
     "nosotros.html": {
         "sucursal": lambda: T.sucursal_block(

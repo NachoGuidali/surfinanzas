@@ -17,7 +17,7 @@ import sys as _sys
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
 
 from empresa import (          # noqa: F401 — se reexportan a propósito
-    SITE, TEL_DISPLAY, TEL_E164, WA_NUMERO, WA,
+    SITE, TEL_DISPLAY, TEL_E164, WA_NUMERO, WA, WA_SUCURSAL,
     CANAL_URL, CANAL_NOMBRE, CANAL_TAGLINE, CANAL_SLOGAN, CANAL_BAJADA,
     SUCURSAL, sucursal_datos, REDES,
 )
@@ -366,8 +366,8 @@ def footer_block(p):
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sur Finanzas · Canning, Buenos Aires · CUIT (placeholder)</p>
-      <p class="footer-legal">Sur Finanzas ofrece servicios financieros y de custodia de valores conforme a la normativa vigente, y no se encuentra autorizada a operar como entidad financiera regulada por el BCRA salvo donde se indique expresamente para cada línea de negocio.</p>
+      <p>© 2026 Sur Finanzas Group S.A. · CUIT 30-71740402-1</p>
+      <p class="footer-legal">Proveedor de crédito no financiero habilitado por el BCRA, registro número 55.380. Domicilio legal: Seguí 776, Adrogué, Buenos Aires.</p>
     </div>
   </div>
 </footer>'''
