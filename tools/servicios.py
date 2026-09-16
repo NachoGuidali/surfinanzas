@@ -171,7 +171,7 @@ SERVICIOS = [
         # El contenido vive en las secciones de abajo, más específicas que la
         # grilla genérica de "En detalle".
         "puntos": [],
-        "orden": ["proceso", "secciones", "publico", "app", "video"],
+        "orden": ["proceso", "secciones", "publico", "app", "video", "atencion"],
 
         "proceso": {
             "titulo": "Cómo funciona",
@@ -247,6 +247,19 @@ SERVICIOS = [
             "bajada": "Mirá el paso a paso en video.",
             "estado": "Video en producción",
             "archivo": "",
+        },
+
+        # Banner de WhatsApp debajo del video. "numero" es PROVISORIO: vacío
+        # usa el WhatsApp general del sitio. Cuando esté la línea propia,
+        # cargarla con formato wa.me (549 + área + número, sin espacios).
+        "atencion": {
+            "eyebrow": "Atención personalizada",
+            "titulo": "Contactate para una atención personalizada",
+            "bajada": "Contanos qué cheques tenés y te ayudamos a armar la mejor "
+                      "opción para tu operación.",
+            "boton": "Escribinos por WhatsApp",
+            "numero": "",
+            "wa": "Hola Sur Finanzas, quiero una atención personalizada para operar cheques.",
         },
         "cta": "Descontá tu cheque",
         "wa": "Hola Sur Finanzas, quiero descontar un cheque.",

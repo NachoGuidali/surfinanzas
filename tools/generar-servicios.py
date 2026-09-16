@@ -37,8 +37,8 @@ def e(t):
     return html.escape(t or "", quote=True)
 
 
-def wa(texto):
-    return f"https://wa.me/{T.WA_NUMERO}?text=" + urllib.parse.quote(texto)
+def wa(texto, numero=None):
+    return f"https://wa.me/{numero or T.WA_NUMERO}?text=" + urllib.parse.quote(texto)
 
 
 def badge(s):
@@ -424,6 +424,32 @@ def seccion_video(s):
 </section>'''
 
 # ---------------------------------------------------------------------------
+# Banner de atención personalizada por WhatsApp
+# ---------------------------------------------------------------------------
+
+def seccion_atencion(s):
+    a = s.get("atencion")
+    if not a:
+        return ""
+    enlace = wa(a.get("wa", s["wa"]), a.get("numero"))
+    return f'''<section class="section">
+  <div class="container">
+    <div class="atencion-banda" data-reveal>
+      <span class="atencion-icono" aria-hidden="true">{T.WA_ICON}</span>
+      <div class="atencion-texto">
+        <p class="eyebrow">{e(a.get("eyebrow", "Atención personalizada"))}</p>
+        <h2>{e(a["titulo"])}</h2>
+        <p class="muted">{e(a["bajada"])}</p>
+      </div>
+      <a href="{e(enlace)}" class="btn btn-canal" target="_blank" rel="noopener">
+        {T.WA_ICON} {e(a.get("boton", "Escribinos por WhatsApp"))}
+      </a>
+    </div>
+  </div>
+</section>'''
+
+
+# ---------------------------------------------------------------------------
 # Dónde encontrarnos: datos de la sucursal + mapa interactivo
 # ---------------------------------------------------------------------------
 
@@ -575,6 +601,7 @@ RENDERIZADORES = {
     "simulador": lambda s: simulador(s),
     "faq": lambda s: seccion_faq(s),
     "ubicacion": lambda s: seccion_ubicacion(s),
+    "atencion": lambda s: seccion_atencion(s),
 }
 
 
