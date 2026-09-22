@@ -1107,6 +1107,8 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
 }
 @media (min-width: 620px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .post-grid { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; } }
+/* Con una o dos notas, dos columnas: en la de tres quedaría un hueco */
+@media (min-width: 620px) { .post-grid.dos { grid-template-columns: repeat(2, 1fr); } }
 
 .post-card {
   position: relative;
@@ -1205,6 +1207,11 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
   place-items: center;
 }
 .post-cover img { width: 100%; height: 100%; object-fit: cover; }
+/* Con foto, la portada respeta la proporción de la imagen (así una
+   miniatura 16:9 de YouTube no pierde caras ni el texto de abajo).
+   Sin foto queda el recuadro 21:9 con el isotipo. */
+.post-cover:has(> img) { aspect-ratio: auto; display: block; }
+.post-cover > img { height: auto; }
 .post-cover .post-thumb-mark img { width: 7rem; }
 
 .post-layout { max-width: 44rem; margin-inline: auto; }
@@ -1225,6 +1232,20 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
   scroll-margin-top: calc(var(--nav-h) + 1.5rem);
 }
 .prose p { margin-bottom: 0; }
+
+/* Video de YouTube dentro de una nota (se incrusta pegando el link solo en una línea) */
+.post-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-soft);
+  background: #000;
+}
+.post-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.prose .post-video { margin-block: 1.75rem; }
+/* El link "Mirá la entrevista completa" que va justo debajo del video */
+.prose .post-video + p { margin-top: 0.75rem; font-size: 0.92rem; }
 .prose strong { color: var(--foreground); font-weight: 600; }
 .prose a {
   color: var(--brand);

@@ -117,16 +117,59 @@ def leer_post(path):
     }
 
 
-def a_html(md_text):
+# Un link de YouTube solo en su línea se convierte en el reproductor.
+# Así se carga igual desde el panel que a mano: se pega el link y listo.
+_YOUTUBE = re.compile(
+    r"^[ \t]*https?://(?:www\.|m\.)?(?:youtube\.com/watch\?(?:\S*&)?v=|youtu\.be/)"
+    r"([A-Za-z0-9_-]{11})\S*[ \t]*$", re.M)
+
+
+def videos_youtube(md_text, vista_previa=False):
+    """Reemplaza cada link de YouTube suelto por el video incrustado.
+
+    Usa youtube-nocookie.com: YouTube no deja cookies hasta que se da play.
+    En la vista previa del panel el iframe lo bloquea la política de
+    seguridad, así que ahí se muestra un recuadro con el link.
+    """
+    def video(m):
+        vid = m.group(1)
+        if vista_previa:
+            html_video = (f'<div class="post-video-previa">▶ Video de YouTube '
+                          f'<code>{vid}</code> (se ve en el sitio publicado)</div>')
+        else:
+            html_video = (
+                '<div class="post-video">'
+                f'<iframe src="https://www.youtube-nocookie.com/embed/{vid}" '
+                'title="Video de YouTube" loading="lazy" '
+                'allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" '
+                'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>'
+                '</div>')
+        # Líneas en blanco alrededor: así Markdown lo deja pasar como bloque HTML
+        return f"\n{html_video}\n"
+    return _YOUTUBE.sub(video, md_text)
+
+
+def a_html(md_text, vista_previa=False):
     try:
         import markdown
     except ImportError:
         raise SystemExit("✗ Falta la librería markdown.  Instalala con:  pip install markdown")
     return markdown.markdown(
-        md_text,
+        videos_youtube(md_text, vista_previa),
         extensions=["extra", "sane_lists", "smarty", "toc"],
         output_format="html5",
     )
+
+
+def medidas_imagen(ruta, por_defecto=(1600, 686)):
+    """Ancho y alto reales de la portada, para que el navegador reserve el
+    lugar justo antes de que cargue. Si no se puede leer, el tamaño sugerido."""
+    try:
+        from PIL import Image
+        with Image.open(os.path.join(ROOT, ruta)) as im:
+            return im.size
+    except Exception:
+        return por_defecto
 
 
 def fecha_larga(d):
@@ -191,8 +234,11 @@ def seccion_home(posts, cantidad=3):
         return ""
 
     # Desde el inicio los links van a blog/ y las imágenes salen de la raíz.
+    # Con una sola nota va en formato destacado, a todo el ancho: en la
+    # grilla de tres quedaría una tarjeta sola y dos huecos.
+    sola = len(ultimas) == 1
     tarjetas = "\n".join(
-        tarjeta(p, href_prefijo="blog/", img_prefijo="") for p in ultimas)
+        tarjeta(p, destacada=sola, href_prefijo="blog/", img_prefijo="") for p in ultimas)
 
     return f'''<section class="section" id="novedades">
   <div class="container">
@@ -205,7 +251,7 @@ def seccion_home(posts, cantidad=3):
         Ver todas las notas <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
-    <div class="post-grid">
+    <div class="post-grid{' dos' if len(ultimas) == 2 else ''}"{' style="grid-template-columns:1fr;"' if sola else ""}>
 {tarjetas}
     </div>
   </div>
@@ -313,7 +359,8 @@ def render_post(post, anterior, siguiente, relacionados):
 '''
 
     if post["imagen"]:
-        portada = f'<img src="../{e(post["imagen"])}" alt="" width="1600" height="686" />'
+        ancho, alto = medidas_imagen(post["imagen"])
+        portada = f'<img src="../{e(post["imagen"])}" alt="" width="{ancho}" height="{alto}" />'
     else:
         portada = ('<div class="post-thumb-mark" aria-hidden="true">'
                    '<img src="../assets/branding/isotipo-sur.png" alt="" width="256" height="256" /></div>')
@@ -400,6 +447,11 @@ def render_index(posts):
             "Educación financiera para comercios y emprendedores.")
 
     destacado = next((p for p in posts if p["destacado"]), posts[0] if posts else None)
+    # Con exactamente dos notas no hay destacada: una horizontal arriba y una
+    # vertical sola abajo parecen armadas distinto. Van las dos iguales, lado
+    # a lado. Con una sola nota, o con tres o más, la destacada vuelve.
+    if len(posts) == 2:
+        destacado = None
     resto = [p for p in posts if p is not destacado]
 
     categorias = []
@@ -426,15 +478,21 @@ def render_index(posts):
         filtros = f'''    <div class="tag-list" role="group" aria-label="Filtrar por categoría" data-reveal>
 {chr(10).join(chips)}
     </div>'''
-        destacada_html = f'''    <div class="post-grid" style="grid-template-columns:1fr; margin-top:0;" id="destacado">
+        destacada_html = "" if destacado is None else f'''    <div class="post-grid" style="grid-template-columns:1fr; margin-top:0;" id="destacado">
 {tarjeta(destacado, destacada=True)}
     </div>'''
-        listado = f'''    <div class="post-grid" id="lista-posts">
+        listado = f'''    <div class="post-grid{' dos' if len(resto) <= 2 else ''}" id="lista-posts">
 {chr(10).join(tarjeta(p) for p in resto)}
     </div>
     <div class="post-empty" id="sin-resultados">
       <p>No hay notas en esa categoría.</p>
     </div>'''
+        # Con una sola categoría el filtro no filtra nada, y con una sola
+        # nota la grilla de abajo queda vacía: mejor no mostrarlos.
+        if len(categorias) < 2:
+            filtros = ""
+        if not resto:
+            listado = ""
 
     return f'''<!DOCTYPE html>
 <html lang="es">

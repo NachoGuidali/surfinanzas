@@ -76,6 +76,10 @@ Un párrafo normal. Podés poner **negrita**, *cursiva* y
 - Un ítem de lista
 - Otro ítem
 
+Para mostrar un video de YouTube, pegá el link solo, en una línea aparte:
+
+https://www.youtube.com/watch?v=agd9Tt13x_I
+
 1. Una lista numerada
 2. Segundo paso
 

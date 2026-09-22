@@ -207,6 +207,10 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fo
 .separador-md { flex: 1; }
 
 .panel-preview { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--borde); }
+.post-video-previa {
+  padding: 1.25rem; border: 1px dashed var(--borde); border-radius: 0.6rem;
+  text-align: center; color: var(--marca);
+}
 .etiqueta-preview {
   font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--marca); margin-bottom: 1rem;

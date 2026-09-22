@@ -282,12 +282,7 @@ def listar_imagenes():
 
 def render_markdown(texto):
     """Mismo render que usa el generador, para que la vista previa coincida."""
-    import markdown
-    return markdown.markdown(
-        texto or "",
-        extensions=["extra", "sane_lists", "smarty", "toc"],
-        output_format="html5",
-    )
+    return _mod_generador().a_html(texto or "", vista_previa=True)
 
 
 def generar():
