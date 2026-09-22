@@ -270,11 +270,12 @@
   var formSim = $("#form-simulador");
   if (formSim) {
     var campos = {
-      tasa: $("#tasa"), inicial: $("#inicial"), plazoInicial: $("#plazo_inicial"),
+      tna: $("#tna"), inicial: $("#inicial"), plazoInicial: $("#plazo_inicial"),
       minimo: $("#minimo"), maximo: $("#maximo")
     };
     var salida = {
-      monto: $("#pv-monto"), plazo: $("#pv-plazo"), cuota: $("#pv-cuota"),
+      monto: $("#pv-monto"), plazo: $("#pv-plazo"), mensual: $("#pv-mensual"),
+      cuota: $("#pv-cuota"),
       total: $("#pv-total"), costo: $("#pv-costo")
     };
 
@@ -287,7 +288,8 @@
     };
 
     var recalcular = function () {
-      var tasa = parseFloat(String(campos.tasa.value).replace(",", ".")) / 100;
+      // Se carga la TNA; la cuota usa la tasa mensual (TNA ÷ 12)
+      var tasa = parseFloat(String(campos.tna.value).replace(",", ".")) / 100 / 12;
       var capital = numero(campos.inicial);
       var plazo = parseInt(campos.plazoInicial.value, 10);
 
@@ -298,13 +300,14 @@
         return;
       }
 
-      var cuota = tasa > 0
-        ? capital * tasa / (1 - Math.pow(1 + tasa, -plazo))
-        : capital / plazo;
-      var total = cuota * plazo;
+      // Interés simple, igual que en el sitio: total = capital × (1 + tasa × meses)
+      var total = capital * (1 + tasa * plazo);
+      var cuota = total / plazo;
 
       salida.monto.textContent = pesos(capital);
       salida.plazo.textContent = plazo + " meses";
+      salida.mensual.textContent =
+        (tasa * 100).toLocaleString("es-AR", { maximumFractionDigits: 4 }) + "%";
       salida.cuota.textContent = pesos(cuota);
       salida.total.textContent = pesos(total);
       salida.costo.textContent = pesos(total - capital) +

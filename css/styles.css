@@ -1847,6 +1847,20 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
 }
 .marco-video video { width: 100%; height: 100%; object-fit: cover; }
+/* En pantalla completa el video se muestra entero, sin recortar: el "cover"
+   de arriba sirve para el marco, pero en pantalla completa agranda un video
+   vertical hasta llenar el ancho del monitor y le corta arriba y abajo.
+   Van en reglas separadas: si un navegador no entiende uno de los dos
+   selectores, descarta la regla entera. */
+.marco-video video:fullscreen { object-fit: contain; background: #000; }
+.marco-video video:-webkit-full-screen { object-fit: contain; background: #000; }
+/* Videos grabados para celular (9:16): centrados y sin recortar.
+   Lo más grande posible sin pasar el 85% del alto de la pantalla,
+   para que se vea entero sin scrollear. */
+.marco-video.vertical {
+  max-width: min(27rem, 100%, calc(85vh * 9 / 16));
+  aspect-ratio: 9 / 16;
+}
 .marco-video .foto-placeholder svg { width: 3rem; height: 3rem; }
 
 /* ===================================================================
@@ -2136,8 +2150,32 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
 
 .surfi {
   display: inline-block;
+  font-size: 1.4em;            /* más grande que el texto que acompaña */
+  line-height: 1;
+  letter-spacing: 0;
   transform-origin: 50% 80%;   /* pivota sobre la tabla, no sobre el centro */
   animation: surfeando 2.8s ease-in-out infinite;
+}
+
+/* "El nuevo Surfi" del hero del inicio: píldora más grande y con brillo,
+   igual que en la página de mantenimiento, para que se lea primero. */
+.eyebrow-surfi {
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1.2rem 0.5rem 1.05rem;
+  border: 1px solid rgba(9, 254, 213, 0.32);
+  border-radius: 999px;
+  background: rgba(9, 254, 213, 0.1);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 28px rgba(9, 254, 213, 0.16);
+  font-size: clamp(0.95rem, 2.6vw, 1.15rem);
+  letter-spacing: 0.16em;
+}
+.eyebrow-surfi::before { content: none; }
+.eyebrow-surfi .surfi {
+  font-size: 1.85em;
+  filter: drop-shadow(0 0 10px rgba(9, 254, 213, 0.45));
 }
 
 /* ---------- Más movimiento en la franja del canal ---------- */
@@ -2348,3 +2386,17 @@ a.red-youtube:hover .red-icono {
 @media (prefers-reduced-motion: reduce) {
   .atencion-icono::after { animation: none; opacity: 0; }
 }
+
+/* ===================================================================
+   27. Tarjetas parejas
+   Dos tarjetas lado a lado con la misma altura y el botón alineado
+   abajo, aunque el texto de una sea más largo (WhatsApp y canal, en
+   Contacto). El párrafo crece y empuja el botón al fondo.
+   =================================================================== */
+.cards-parejas { align-items: stretch; }
+.cards-parejas > .card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.cards-parejas > .card > .muted { flex-grow: 1; }

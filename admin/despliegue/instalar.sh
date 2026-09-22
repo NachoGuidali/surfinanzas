@@ -165,7 +165,7 @@ $(verde "Listo. Falta lo que depende de tu dominio:")
 
   4. Pedir el certificado (sin HTTPS el panel no deja iniciar sesión):
 
-       sudo certbot --nginx -d TU-DOMINIO -d www.TU-DOMINIO -d panel.TU-DOMINIO
+       sudo certbot --nginx -d TU-DOMINIO -d www.TU-DOMINIO -d panel.TU-DOMINIO -d analytics.TU-DOMINIO -d mails.TU-DOMINIO
 
 $(amar "Recomendado: limitá el panel a las IPs de tu equipo.")
   Está comentado en nginx.conf, en el bloque de panel. Es la mejora de

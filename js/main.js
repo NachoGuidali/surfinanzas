@@ -443,11 +443,11 @@
 
       function calcular() {
         var capital = parseInt(monto.value, 10);
-        // Sistema francés: cuota fija. Con tasa 0 es simplemente capital/plazo.
-        var cuota = tasa > 0
-          ? capital * tasa / (1 - Math.pow(1 + tasa, -plazo))
-          : capital / plazo;
-        var total = cuota * plazo;
+        // Interés simple: total = capital × (1 + tasa mensual × meses),
+        // dividido en cuotas iguales. Con TNA 100%: $1.000.000 a 12 meses
+        // son $2.000.000 en total, 12 cuotas de $166.667.
+        var total = capital * (1 + tasa * plazo);
+        var cuota = total / plazo;
 
         etiquetaMonto.textContent = pesos(capital);
         salidaCuota.textContent = pesos(cuota);

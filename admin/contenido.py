@@ -310,7 +310,7 @@ GENERADOR_SERVICIOS = os.path.join(RAIZ, "tools", "generar-servicios.py")
 ARCHIVO_SIMULADOR = os.path.join(DATOS_DIR, "simulador.json")
 
 LIMITES = {
-    "tasa_mensual": (0.0, 1.0),          # 0% a 100% mensual
+    "tna": (0.0, 10.0),                  # 0% a 1000% nominal anual
     "minimo": (1_000, 1_000_000_000),
     "maximo": (1_000, 1_000_000_000),
     "paso": (1_000, 100_000_000),
@@ -357,15 +357,15 @@ def guardar_simulador(archivo, datos):
     """Valida y guarda la configuración. Devuelve la config final."""
     servicio, actual = leer_simulador(archivo)
 
-    # Tasa: en el panel se carga como porcentaje (7,5), se guarda como 0.075
-    bruto = str(datos.get("tasa_mensual", "")).replace("%", "").replace(",", ".").strip()
+    # TNA: en el panel se carga como porcentaje (100), se guarda como 1.0
+    bruto = str(datos.get("tna", "")).replace("%", "").replace(",", ".").strip()
     try:
-        tasa = float(bruto) / 100
+        tna = float(bruto) / 100
     except (TypeError, ValueError):
-        raise ErrorContenido("La tasa tiene que ser un número, por ejemplo 7,5.")
-    lo, hi = LIMITES["tasa_mensual"]
-    if not (lo <= tasa <= hi):
-        raise ErrorContenido("La tasa mensual tiene que estar entre 0% y 100%.")
+        raise ErrorContenido("La TNA tiene que ser un número, por ejemplo 100.")
+    lo, hi = LIMITES["tna"]
+    if not (lo <= tna <= hi):
+        raise ErrorContenido("La TNA tiene que estar entre 0% y 1000%.")
 
     minimo = _entero(datos.get("minimo"), "Monto mínimo", *LIMITES["minimo"])
     maximo = _entero(datos.get("maximo"), "Monto máximo", *LIMITES["maximo"])
@@ -399,7 +399,7 @@ def guardar_simulador(archivo, datos):
         raise ErrorContenido("El plazo destacado tiene que ser uno de los plazos cargados.")
 
     config = {
-        "tasa_mensual": round(tasa, 6),
+        "tna": round(tna, 6),
         "minimo": minimo,
         "maximo": maximo,
         "paso": paso,
@@ -423,16 +423,17 @@ def guardar_simulador(archivo, datos):
         json.dump(todo, fh, ensure_ascii=False, indent=2)
     os.replace(tmp, ARCHIVO_SIMULADOR)
 
+    config["tasa_mensual"] = tna / 12
     return config
 
 
 def cuota(capital, tasa, plazo):
-    """Sistema francés: cuota fija. Con tasa 0 es capital dividido plazo."""
+    """Interés simple: total = capital × (1 + tasa × plazo), en cuotas iguales."""
     if plazo <= 0:
         return 0.0
     if tasa <= 0:
         return capital / plazo
-    return capital * tasa / (1 - (1 + tasa) ** -plazo)
+    return capital * (1 + tasa * plazo) / plazo
 
 
 def generar_servicios():

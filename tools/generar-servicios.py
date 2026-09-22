@@ -405,7 +405,7 @@ def seccion_video(s):
     if not v:
         return ""
     if v.get("archivo"):
-        contenido = (f'<video controls preload="metadata"'
+        contenido = (f'<video controls playsinline preload="metadata"'
                      + (f' poster="../{e(v["poster"])}"' if v.get("poster") else "")
                      + f'><source src="../{e(v["archivo"])}" type="video/mp4" /></video>')
     else:
@@ -419,7 +419,7 @@ def seccion_video(s):
       <h2>{e(v["titulo"])}</h2>
       <p>{e(v["bajada"])}</p>
     </div>
-    <figure class="marco-video mt-4" data-reveal="scale">{contenido}</figure>
+    <figure class="marco-video{' vertical' if v.get('vertical') else ''} mt-4" data-reveal="scale">{contenido}</figure>
   </div>
 </section>'''
 
@@ -479,7 +479,8 @@ def simulador(s):
     tasa = sim["tasa_mensual"]
     n = sim["plazo_inicial"]
     capital = sim["inicial"]
-    cuota_ini = capital * tasa / (1 - (1 + tasa) ** -n) if tasa > 0 else capital / n
+    # Interés simple: total = capital × (1 + tasa mensual × meses), en cuotas iguales
+    cuota_ini = capital * (1 + tasa * n) / n
 
     botones = "\n".join(
         f'            <button type="button" class="btn btn-sm plazo-btn '

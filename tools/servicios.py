@@ -49,9 +49,14 @@ def config_simulador(servicio):
     try:
         with open(ARCHIVO_SIMULADOR, encoding="utf-8") as fh:
             guardado = _json.load(fh).get(servicio["archivo"], {})
+        # Configuraciones guardadas antes de pasar a TNA traían la mensual
+        if "tna" not in guardado and "tasa_mensual" in guardado:
+            guardado["tna"] = guardado["tasa_mensual"] * 12
         config.update({k: v for k, v in guardado.items() if k in base})
     except (OSError, ValueError, AttributeError):
         pass          # sin override, o archivo ilegible: seguimos con el default
+    # La cuota se calcula con la tasa mensual: TNA ÷ 12
+    config["tasa_mensual"] = config["tna"] / 12
     return config
 
 
@@ -93,6 +98,16 @@ SERVICIOS = [
         "imagen": "",
         "imagen_alt": "",
         "titulo": "El crédito que te banca",
+        # El video va entre "Para quién es" y "Cómo se hace".
+        "orden": ["puntos", "publico", "video", "proceso", "secciones",
+                  "bloques", "app", "simulador", "ubicacion", "faq"],
+        "video": {
+            "titulo": "Te lo contamos en video",
+            "bajada": "Menos de 20 segundos para conocer nuestros microcréditos.",
+            "archivo": "assets/servicios/microcreditos.mp4",
+            "poster": "assets/servicios/microcreditos-poster.jpg",
+            "vertical": True,        # grabado para celular (9:16)
+        },
         "gancho": "Requisitos mínimos, aprobación rápida.",
         "resumen": "Financiación ágil para mercadería, herramientas o capital de trabajo.",
         "descripcion": "Líneas de financiación ágiles para compra de mercadería, herramientas "
@@ -143,16 +158,17 @@ SERVICIOS = [
         "cta": "Pedí tu microcrédito",
         "wa": "Hola Sur Finanzas, quiero pedir un microcrédito para mi emprendimiento.",
 
-        # ⚠️ VALORES DE EJEMPLO — reemplazar por los reales antes de publicar.
-        # La tasa de acá sale en pantalla: si no es la que cobran, cambiala.
+        # Valores definidos por Sur Finanzas (18/09/2026): TNA 100%, hasta
+        # $10.000.000 y hasta 12 meses. Desde el panel se pueden pisar.
+        # La tasa se carga como TNA; la mensual (TNA ÷ 12) se calcula sola.
         "simulador": {
             "minimo": 100_000,
-            "maximo": 3_000_000,
-            "paso": 50_000,
-            "inicial": 500_000,
-            "plazos": [3, 6, 9, 12, 18, 24],
+            "maximo": 10_000_000,
+            "paso": 100_000,
+            "inicial": 1_000_000,
+            "plazos": [3, 6, 9, 12],
             "plazo_inicial": 12,
-            "tasa_mensual": 0.075,      # 7,5% mensual — PLACEHOLDER
+            "tna": 1.00,                # 100% nominal anual
         },
     },
     {
@@ -232,10 +248,10 @@ SERVICIOS = [
             "bajada": "Así se ve en la app.",
             "imagenes": [
                 {"src": "assets/servicios/app-cheques-1.jpg",
-                 "ancho": 336, "alto": 652,
+                 "ancho": 328, "alto": 644,
                  "alt": "Pantalla de la App Sur Finanzas para sacarle una foto al cheque"},
                 {"src": "assets/servicios/app-cheques-2.jpg",
-                 "ancho": 351, "alto": 657,
+                 "ancho": 328, "alto": 644,
                  "alt": "Pantalla de la App Sur Finanzas con los datos del cheque leídos "
                         "y el descuento estimado"},
             ],
@@ -372,8 +388,8 @@ SERVICIOS = [
         "archivo": "cajas-seguridad.html",
         "nombre": "Cajas de seguridad",
         "icono": "cajas",
-        "imagen": "",
-        "imagen_alt": "",
+        "imagen": "assets/servicios/cajas-seguridad.jpg",
+        "imagen_alt": "Módulos de cajas de seguridad numerados, con sus llaves puestas",
         "titulo": "Lo irremplazable, en el lugar más seguro",
         "gancho": "Acceso privado y confidencial.",
         "resumen": "Alquiler de módulos blindados para resguardar documentación y valores.",
@@ -430,9 +446,9 @@ SERVICIOS = [
                     ("Horario flexible",
                      "El mismo horario extendido del shopping. Nada de ir corriendo antes "
                      "de las 15."),
-                    ("Acceso compartido con QR",
-                     "¿Necesitás que alguien más entre a tu caja? Compartís un QR único con "
-                     "hasta 2 o 3 personas de confianza — vos decidís con quién."),
+                    ("Acceso autorizado con QR",
+                     "¿Necesitás que alguien más entre a tu caja? Vos autorizás hasta dos "
+                     "personas de confianza para que accedan con QR."),
                 ],
             },
         ],

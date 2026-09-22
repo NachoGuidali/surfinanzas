@@ -22,6 +22,10 @@ from empresa import (          # noqa: F401 — se reexportan a propósito
     SUCURSAL, sucursal_datos, REDES,
 )
 
+# El surfista del canal va animado en todos lados (ver .surfi en styles.css).
+SURFI = '<span class="surfi" role="img" aria-label="surfista">🏄</span>'
+CANAL_TAGLINE_HTML = CANAL_TAGLINE.replace("🏄", SURFI)
+
 # Los servicios se definen en tools/servicios.py — no duplicar la lista acá.
 import servicios as _servicios
 
@@ -135,7 +139,7 @@ def canal_banda(p=""):
         <p class="eyebrow">Canal de WhatsApp</p>
         <h2 class="canal-titulo">
           {CANAL_NOMBRE}<br />
-          <span class="canal-tagline">{CANAL_TAGLINE}</span>
+          <span class="canal-tagline">{CANAL_TAGLINE_HTML}</span>
         </h2>
         <p class="muted mt-1">{CANAL_BAJADA}</p>
       </div>
@@ -209,7 +213,7 @@ def canal_tarjeta():
         <div class="icon-badge icono-canal">{CANAL_ICONO}</div>
         <h2 class="canal-titulo" style="font-size:1.2rem;">
           {CANAL_NOMBRE}<br />
-          <span class="canal-tagline">{CANAL_TAGLINE}</span>
+          <span class="canal-tagline">{CANAL_TAGLINE_HTML}</span>
         </h2>
         <p class="muted mt-1">{CANAL_BAJADA}</p>
         <a href="{CANAL_URL}" class="btn btn-canal mt-2" target="_blank" rel="noopener">Segu&iacute; el canal</a>
@@ -221,7 +225,7 @@ def canal_pie():
     return f'''      <a class="canal-tira" href="{CANAL_URL}" target="_blank" rel="noopener">
         <span class="canal-tira-icono">{CANAL_ICONO}</span>
         <span class="canal-tira-texto">
-          <strong>{CANAL_NOMBRE} <span class="canal-tagline-inline">{CANAL_TAGLINE}</span></strong>
+          <strong>{CANAL_NOMBRE} <span class="canal-tagline-inline">{CANAL_TAGLINE_HTML}</span></strong>
           <span>Seguí el canal de WhatsApp para no perderte nada.</span>
         </span>
         <span class="canal-tira-flecha" aria-hidden="true">&rarr;</span>
@@ -319,7 +323,7 @@ def header_block(p, active):
       <a href="{WA}" class="btn btn-brand" data-close target="_blank" rel="noopener">Hablanos por WhatsApp</a>
     </div>
     <a class="mobile-canal" href="{CANAL_URL}" data-close target="_blank" rel="noopener">
-      {CANAL_ICONO} <span>Seguí el canal · <strong>{CANAL_TAGLINE}</strong></span>
+      {CANAL_ICONO} <span>Seguí el canal · <strong>{CANAL_TAGLINE_HTML}</strong></span>
     </a>
     <p class="mobile-contact">
       ¿Preferís escribirnos? <a href="mailto:Info@surfinanzas.com.ar">Info@surfinanzas.com.ar</a>
@@ -367,7 +371,7 @@ def footer_block(p):
     </div>
     <div class="footer-bottom">
       <p>© 2026 Sur Finanzas Group S.A. · CUIT 30-71740402-1</p>
-      <p class="footer-legal">Proveedor de crédito no financiero habilitado por el BCRA, registro número 55.380. Domicilio legal: Seguí 776, Adrogué, Buenos Aires.</p>
+      <p class="footer-legal">Sur Finanzas ofrece servicios financieros y de custodia de valores conforme a la normativa vigente, y no se encuentra autorizada a operar como entidad financiera regulada por el BCRA salvo donde se indique expresamente para cada línea de negocio.</p>
     </div>
   </div>
 </footer>'''

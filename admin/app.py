@@ -336,8 +336,8 @@ def _config_del_form(form, anterior):
     for campo in ("minimo", "maximo", "paso", "inicial", "plazo_inicial"):
         if form.get(campo):
             salida[campo] = form.get(campo)
-    if form.get("tasa_mensual"):
-        salida["tasa_texto"] = form.get("tasa_mensual")
+    if form.get("tna"):
+        salida["tna_texto"] = form.get("tna")
     if form.get("plazos"):
         salida["plazos_texto"] = form.get("plazos")
     return salida
