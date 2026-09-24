@@ -280,7 +280,7 @@ def header_block(p, active):
   <div class="container">
     <div class="nav-left">
       <a href="{p}index.html" class="nav-logo" aria-label="Sur Finanzas — Ir al inicio">
-        <img src="{p}assets/branding/logo-sur.png" alt="Sur Finanzas" width="560" height="217" />
+        <img src="{p}assets/branding/logo-sur.svg" alt="Sur Finanzas" width="399" height="155" />
       </a>
       <nav class="nav-links" aria-label="Navegación principal">
         <a href="{p}index.html"{cls("inicio")}>Inicio</a>
@@ -342,7 +342,7 @@ def footer_block(p):
     <div class="footer-top">
       <div class="footer-logo">
         <a href="{p}index.html" aria-label="Sur Finanzas — Ir al inicio">
-          <img src="{p}assets/branding/logo-sur.png" alt="Sur Finanzas" width="560" height="217" />
+          <img src="{p}assets/branding/logo-sur.svg" alt="Sur Finanzas" width="399" height="155" />
         </a>
         <p class="muted">Oro, cheques, microcréditos, medios de pago, caudales y cajas. Un mismo respaldo para cada operación.</p>
         <div class="footer-social">
@@ -364,8 +364,8 @@ def footer_block(p):
         </div>
         <div class="footer-col">
           <h4>Legales</h4>
-          <a href="#">Términos y condiciones</a>
-          <a href="#">Política de privacidad</a>
+          <a href="{p}terminos.html">Términos y condiciones</a>
+          <a href="{p}privacidad.html">Política de privacidad</a>
         </div>
       </div>
     </div>

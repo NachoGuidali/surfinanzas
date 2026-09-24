@@ -48,6 +48,7 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
 PAGINAS_FIJAS = [
     ("index.html", "1.0"), ("nosotros.html", "0.8"), ("contacto.html", "0.8"),
     ("blog/index.html", "0.9"),
+    ("terminos.html", "0.3"), ("privacidad.html", "0.3"),
 ] + [(h, "0.8") for h, _ in T.SERVICES]
 
 

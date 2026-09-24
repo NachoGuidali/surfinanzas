@@ -56,6 +56,8 @@ PAGINAS = {
     "index.html": ("", "inicio"),
     "nosotros.html": ("", "nosotros"),
     "contacto.html": ("", "contacto"),
+    "terminos.html": ("", ""),
+    "privacidad.html": ("", ""),
 }
 for href, _ in T.SERVICES:
     PAGINAS[href] = ("../", "servicios")
