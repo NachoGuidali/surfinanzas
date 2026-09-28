@@ -136,7 +136,8 @@ Si `Type=notify` te da problemas con tu versión de gunicorn, cambialo a
 sudo cp admin/despliegue/nginx.conf /etc/nginx/sites-available/surfinanzas
 sudo ln -s /etc/nginx/sites-available/surfinanzas /etc/nginx/sites-enabled/
 sudo nginx -t
-sudo certbot --nginx -d surfinanzas.com.ar -d www.surfinanzas.com.ar -d panel.surfinanzas.com.ar
+sudo certbot --nginx -d surfinanzas.com.ar -d www.surfinanzas.com.ar \
+  -d panel.surfinanzas.com.ar -d analytics.surfinanzas.com.ar -d mails.surfinanzas.com.ar
 sudo systemctl reload nginx
 ```
 

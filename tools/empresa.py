@@ -41,7 +41,7 @@ SUCURSAL = {
     "titulo": "Dónde encontrarnos",
     "bajada": "Plaza Canning, Buenos Aires.",
     "direccion": "Plaza Canning, locales 112 y 113 — Canning, Buenos Aires",
-    "horario": "(a confirmar)",
+    "horario": "A partir de las 10 hs",
     # El mapa se embebe por búsqueda de Google Maps: es interactivo y no
     # necesita API key. Con la dirección exacta o "lat,lng" el pin cae justo.
     "mapa_query": "Plaza Canning, Canning, Buenos Aires, Argentina",
