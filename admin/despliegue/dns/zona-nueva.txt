@@ -1,0 +1,39 @@
+;; Sur Finanzas — registros DNS para importar en Cloudflare
+;; Generado el 28/09/2026 a partir de la exportación de la zona.
+;;
+;; Qué hace este archivo:
+;;   - apunta el dominio, www y los subdominios nuevos al VPS (149.34.226.56)
+;;   - conserva todo lo de Microsoft 365 (correo, DKIM, Intune, Teams)
+;;   - deja afuera los registros del hosting viejo y los sobrantes
+;;
+;; OJO: importar en Cloudflare AGREGA registros, no borra los que ya están.
+;; Los viejos hay que borrarlos a mano. La lista está en LEEME.md.
+
+;; --- Sitio web y paneles (VPS) ---------------------------------------------
+surfinanzas.com.ar.	300	IN	A	149.34.226.56 ; cf_tags=cf-proxied:false
+www.surfinanzas.com.ar.	300	IN	A	149.34.226.56 ; cf_tags=cf-proxied:false
+panel.surfinanzas.com.ar.	300	IN	A	149.34.226.56 ; cf_tags=cf-proxied:false
+analytics.surfinanzas.com.ar.	300	IN	A	149.34.226.56 ; cf_tags=cf-proxied:false
+mails.surfinanzas.com.ar.	300	IN	A	149.34.226.56 ; cf_tags=cf-proxied:false
+
+;; --- Correo: Microsoft 365 --------------------------------------------------
+surfinanzas.com.ar.	3600	IN	MX	0 surfinanzas-com-ar.mail.protection.outlook.com.
+autodiscover.surfinanzas.com.ar.	3600	IN	CNAME	autodiscover.outlook.com. ; cf_tags=cf-proxied:false
+selector1._domainkey.surfinanzas.com.ar.	3600	IN	CNAME	selector1-surfinanzas-com-ar._domainkey.surfinanzas.e-v1.dkim.mail.microsoft. ; cf_tags=cf-proxied:false
+selector2._domainkey.surfinanzas.com.ar.	3600	IN	CNAME	selector2-surfinanzas-com-ar._domainkey.surfinanzas.e-v1.dkim.mail.microsoft. ; cf_tags=cf-proxied:false
+surfinanzas.com.ar.	3600	IN	TXT	"v=spf1 include:spf.protection.outlook.com ~all"
+_dmarc.surfinanzas.com.ar.	3600	IN	TXT	"v=DMARC1; p=none;"
+
+;; --- Verificación del dominio en Microsoft 365 ------------------------------
+surfinanzas.com.ar.	3600	IN	TXT	"MS=ms72075524"
+
+;; --- Intune / Entra (alta de dispositivos) ----------------------------------
+enterpriseenrollment.surfinanzas.com.ar.	3600	IN	CNAME	enterpriseenrollment-s.manage.microsoft.com. ; cf_tags=cf-proxied:false
+enterpriseregistration.surfinanzas.com.ar.	3600	IN	CNAME	enterpriseregistration.windows.net. ; cf_tags=cf-proxied:false
+
+;; --- Skype for Business / Teams (heredado de Microsoft) ---------------------
+;; Si en la organización solo se usa Teams, estos cuatro se pueden borrar.
+sip.surfinanzas.com.ar.	3600	IN	CNAME	sipdir.online.lync.com. ; cf_tags=cf-proxied:false
+lyncdiscover.surfinanzas.com.ar.	3600	IN	CNAME	webdir.online.lync.com. ; cf_tags=cf-proxied:false
+_sipfederationtls._tcp.surfinanzas.com.ar.	3600	IN	SRV	100 1 5061 sipfed.online.lync.com.
+_sip._tls.surfinanzas.com.ar.	3600	IN	SRV	100 1 443 sipdir.online.lync.com.

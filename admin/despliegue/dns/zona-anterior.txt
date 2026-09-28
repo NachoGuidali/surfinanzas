@@ -1,0 +1,81 @@
+;;
+;; Domain:     surfinanzas.com.ar.
+;; Exported:   2026-09-28 14:25:14
+;;
+;; This file is intended for use for informational and archival
+;; purposes ONLY and MUST be edited before use on a production
+;; DNS server.  In particular, you must:
+;;   -- update the SOA record with the correct authoritative name server
+;;   -- update the SOA record with the contact e-mail address information
+;;   -- update the NS record(s) with the authoritative name servers for this domain.
+;;
+;; For further information, please consult the BIND documentation
+;; located on the following website:
+;;
+;; http://www.isc.org/
+;;
+;; And RFC 1035:
+;;
+;; http://www.ietf.org/rfc/rfc1035.txt
+;;
+;; Please note that we do NOT offer technical support for any use
+;; of this zone data, the BIND name server, or any other third-party
+;; DNS software.
+;;
+;; Use at your own risk.
+;; SOA Record
+surfinanzas.com.ar	3600	IN	SOA	aaden.ns.cloudflare.com. dns.cloudflare.com. 2054227211 10000 2400 604800 3600
+
+;; NS Records
+surfinanzas.com.ar.	86400	IN	NS	aaden.ns.cloudflare.com.
+surfinanzas.com.ar.	86400	IN	NS	jen.ns.cloudflare.com.
+
+;; A Records
+api.surfinanzas.com.ar.	1	IN	A	172.67.214.186 ; cf_tags=cf-proxied:true
+api.surfinanzas.com.ar.	1	IN	A	104.21.23.250 ; cf_tags=cf-proxied:true
+autoconfig.surfinanzas.com.ar.	1	IN	A	104.21.23.250 ; cf_tags=cf-proxied:true
+autoconfig.surfinanzas.com.ar.	1	IN	A	172.67.214.186 ; cf_tags=cf-proxied:true
+ftp.surfinanzas.com.ar.	1	IN	A	200.58.105.249 ; cf_tags=cf-proxied:true
+mail.surfinanzas.com.ar.	1	IN	A	200.58.105.249 ; cf_tags=cf-proxied:true
+mx1.surfinanzas.com.ar.	1	IN	A	200.58.122.206 ; cf_tags=cf-proxied:true
+qa.surfinanzas.com.ar.	1	IN	A	104.21.23.250 ; cf_tags=cf-proxied:true
+qa.surfinanzas.com.ar.	1	IN	A	172.67.214.186 ; cf_tags=cf-proxied:true
+surfinanzas.com.ar.	1	IN	A	66.97.39.70 ; cf_tags=cf-proxied:true
+www.surfinanzas.com.ar.	1	IN	A	66.97.39.70 ; cf_tags=cf-proxied:true
+
+;; AAAA Records
+api.surfinanzas.com.ar.	1	IN	AAAA	2606:4700:3037::6815:17fa ; cf_tags=cf-proxied:true
+api.surfinanzas.com.ar.	1	IN	AAAA	2606:4700:3032::ac43:d6ba ; cf_tags=cf-proxied:true
+surfinanzas.com.ar.	1	IN	AAAA	2606:4700:3032::ac43:d6ba ; cf_tags=cf-proxied:true
+surfinanzas.com.ar.	1	IN	AAAA	2606:4700:3037::6815:17fa ; cf_tags=cf-proxied:true
+www.surfinanzas.com.ar.	1	IN	AAAA	2606:4700:3032::ac43:d6ba ; cf_tags=cf-proxied:true
+www.surfinanzas.com.ar.	1	IN	AAAA	2606:4700:3037::6815:17fa ; cf_tags=cf-proxied:true
+
+;; CNAME Records
+autodiscover.surfinanzas.com.ar.	3600	IN	CNAME	autodiscover.outlook.com. ; cf_tags=cf-proxied:false
+enterpriseenrollment.surfinanzas.com.ar.	3600	IN	CNAME	enterpriseenrollment-s.manage.microsoft.com. ; cf_tags=cf-proxied:false
+enterpriseregistration.surfinanzas.com.ar.	3600	IN	CNAME	enterpriseregistration.windows.net. ; cf_tags=cf-proxied:false
+k2._domainkey.surfinanzas.com.ar.	1	IN	CNAME	dkim2.mcsv.net. ; cf_tags=cf-proxied:false
+k3._domainkey.surfinanzas.com.ar.	1	IN	CNAME	dkim3.mcsv.net. ; cf_tags=cf-proxied:false
+lyncdiscover.surfinanzas.com.ar.	1	IN	CNAME	webdir.online.lync.com. ; cf_tags=cf-proxied:true
+selector1._domainkey.surfinanzas.com.ar.	3600	IN	CNAME	selector1-surfinanzas-com-ar._domainkey.surfinanzas.e-v1.dkim.mail.microsoft. ; cf_tags=cf-proxied:false
+selector2._domainkey.surfinanzas.com.ar.	3600	IN	CNAME	selector2-surfinanzas-com-ar._domainkey.surfinanzas.e-v1.dkim.mail.microsoft. ; cf_tags=cf-proxied:false
+sip.surfinanzas.com.ar.	1	IN	CNAME	sipdir.online.lync.com. ; cf_tags=cf-proxied:true
+webmail.surfinanzas.com.ar.	1	IN	CNAME	surfinanzas.com.ar. ; cf_tags=cf-proxied:true
+
+;; MX Records
+surfinanzas.com.ar.	1	IN	MX	0 surfinanzas-com-ar.mail.protection.outlook.com.
+
+;; SRV Records
+_sipfederationtls._tcp.surfinanzas.com.ar.	1	IN	SRV	100 1 5061 sipfed.online.lync.com.
+_sip._tls.surfinanzas.com.ar.	1	IN	SRV	100 1 443 sipdir.online.lync.com.
+
+;; TXT Records
+_acme-challenge.surfinanzas.com.ar.	1	IN	TXT	"iJghMmtNBqISMSyo9CJO03mlI5fV2DltrrpK2_C4kfk"
+_acme-challenge.surfinanzas.com.ar.	1	IN	TXT	"0DcSMFJnqB6QQOGIt0GlzpdeunP3bh3h7_k2SezIiOA"
+_dmarc.surfinanzas.com.ar.	1	IN	TXT	"v=DMARC1; p=none;"
+mail._domainkey.surfinanzas.com.ar.	1	IN	TXT	"v=DKIM1; g=*; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCtK1jvnPMculCJ9oaweAWGliElRYstgb389Jn5PBDWDmOYS22z7nrFHpNZBs4nkyJXlyFUzaiPVsA/0Fer6mDKzt2ZpBXehMXulD5/0KFmMJA268CbINTy5N2oWbgT6nWDNiR0rM/098I9blLRMNv1gF1rpqx6SU1/CIZmV0ftgQIDAQAB"
+surfinanzas.com.ar.	1	IN	TXT	"11.08.2026"
+surfinanzas.com.ar.	1	IN	TXT	"06.08.2026"
+surfinanzas.com.ar.	1	IN	TXT	"v=spf1 include:spf.hostmar.com include:spf.protection.outlook.com ~all"
+surfinanzas.com.ar.	1	IN	TXT	"MS=ms72075524"
