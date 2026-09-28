@@ -13,6 +13,11 @@ User=www-data
 Group=www-data
 WorkingDirectory=/var/www/surfinanzas/admin
 EnvironmentFile=/var/www/surfinanzas/admin/.env
+# gunicorn escribe un socket de control dentro de $HOME. El home de www-data
+# es /var/www, que acá queda de solo lectura: se le da un directorio propio
+# en /run, que systemd crea y borra solo.
+RuntimeDirectory=surfinanzas-admin
+Environment=HOME=/run/surfinanzas-admin
 ExecStart=/var/www/surfinanzas/.venv/bin/gunicorn \
     --workers 2 \
     --bind 127.0.0.1:8001 \
