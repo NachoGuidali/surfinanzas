@@ -62,8 +62,14 @@ def sucursal_datos():
 # Las URLs todavía no las tenemos: mientras estén en "" el enlace queda
 # desactivado en vez de llevar a ninguna parte.
 REDES = [
-    {"clave": "instagram", "nombre": "Instagram", "usuario": "", "url": ""},
-    {"clave": "tiktok",    "nombre": "TikTok",    "usuario": "", "url": ""},
-    {"clave": "x",         "nombre": "X",         "usuario": "", "url": ""},
-    {"clave": "youtube",   "nombre": "YouTube",   "usuario": "", "url": ""},
+    {"clave": "instagram", "nombre": "Instagram", "usuario": "@surfinanzasok",
+     "url": "https://www.instagram.com/surfinanzasok/"},
+    {"clave": "facebook",  "nombre": "Facebook",  "usuario": "surfinanzasoficial",
+     "url": "https://www.facebook.com/surfinanzasoficial"},
+    {"clave": "x",         "nombre": "X",         "usuario": "@surfinanzas",
+     "url": "https://x.com/surfinanzas"},
+    {"clave": "youtube",   "nombre": "YouTube",   "usuario": "@surfinanzas",
+     "url": "https://www.youtube.com/@surfinanzas"},
+    # Para sumar otra red: agregá acá su línea (el ícono de TikTok sigue
+    # disponible en ICONOS_RED, dentro de plantilla.py).
 ]

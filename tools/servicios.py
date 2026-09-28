@@ -471,7 +471,7 @@ SERVICIOS = [
         "nombre": "Transporte de caudales",
         "icono": "caudales",
         "imagen": "assets/servicios/transporte-de-caudales.jpg",
-        "imagen_alt": "Camión blindado de Sur Finanzas estacionado en la calle",
+        "imagen_alt": "Camión blindado de Sur Finanzas en la calle, frente a edificios de oficinas",
         "titulo": "Que tu efectivo nunca sea tu problema",
         "gancho": "Unidades blindadas con seguimiento satelital.",
         "resumen": "Traslado y custodia de efectivo y activos, con cobertura asegurada.",
@@ -482,12 +482,11 @@ SERVICIOS = [
         "puntos": [],
         "orden": ["video", "bloques"],
 
-        # Cuando esté el video, cargar "archivo" (y opcionalmente "poster").
         "video": {
             "titulo": "Así trabajamos",
             "bajada": "Mirá cómo operamos, en video.",
-            "estado": "Video en producción",
-            "archivo": "",
+            "archivo": "assets/servicios/caudales.mp4",
+            "poster": "assets/servicios/caudales-poster.jpg",
         },
         "bloques": [
             {
@@ -505,9 +504,8 @@ SERVICIOS = [
                 ],
                 "cta": "Cotizá tu servicio de caudales",
                 "wa": "Hola Sur Finanzas, quiero cotizar un servicio de transporte de caudales.",
-                "imagen": "",
-                "imagen_alt": "",
-                "foto_titulo": "Foto del camión de caudales",
+                "imagen": "assets/servicios/transporte-de-caudales-1.jpg",
+                "imagen_alt": "Camión blindado de Sur Finanzas",
             },
             {
                 "layout": "imagen-derecha",

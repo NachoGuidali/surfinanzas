@@ -104,7 +104,9 @@ button { font: inherit; }
 .section { padding: 3.5rem 0; }
 @media (min-width: 640px) { .section { padding: 5rem 0; } }
 @media (min-width: 1024px) { .section { padding: 6rem 0; } }
-.section-alt { background: var(--background-alt); border-block: 1px solid rgba(255, 255, 255, 0.04); }
+/* Translúcida a propósito: así se ve la marca de agua del fondo.
+   El tono resultante es el mismo que tenía var(--background-alt). */
+.section-alt { background: rgba(255, 255, 255, 0.022); border-block: 1px solid rgba(255, 255, 255, 0.04); }
 
 .grid { display: grid; gap: 1.25rem; }
 .grid-2 { grid-template-columns: 1fr; }
@@ -2328,6 +2330,11 @@ a.red-tiktok:hover .red-icono {
   background: rgba(37, 244, 238, 0.14);
   color: #25F4EE;
 }
+a.red-facebook:hover .red-icono {
+  border-color: #1877F2;
+  background: rgba(24, 119, 242, 0.14);
+  color: #5A9BF6;
+}
 a.red-x:hover .red-icono {
   border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.1);
@@ -2421,3 +2428,26 @@ a.red-youtube:hover .red-icono {
   align-items: flex-start;
 }
 .cards-parejas > .card > .muted { flex-grow: 1; }
+
+/* ===================================================================
+   28. Marca de agua del fondo
+   El isotipo queda fijo detrás de todo, muy tenue. No se mueve con el
+   scroll: la página pasa por encima. Va con z-index:-1, así se apoya
+   sobre el fondo del sitio y por debajo de cualquier contenido.
+   =================================================================== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("../assets/branding/isotipo-sur.png");
+  background-repeat: no-repeat;
+  background-position: center 45%;
+  background-size: min(78vw, 30rem);
+  opacity: 0.04;
+  filter: blur(0.4px);
+}
+@media (min-width: 900px) {
+  body::before { background-size: min(48vw, 38rem); opacity: 0.045; }
+}

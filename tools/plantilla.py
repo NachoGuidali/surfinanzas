@@ -63,6 +63,10 @@ ICONOS_RED = {
     "tiktok": (
         '<path d="M13.6 3v11.1a2.9 2.9 0 1 1-2.4-2.85"/>'
         '<path d="M13.6 3.4a5 5 0 0 0 4.9 4.2"/>'),
+    "facebook": (
+        '<path d="M14.6 21.4v-7.9h2.7l.4-3.1h-3.1V8.4c0-.9.25-1.5 1.55-1.5h1.65V4.1'
+        'c-.3-.04-1.3-.13-2.45-.13-2.4 0-4.05 1.47-4.05 4.18v2.33H8.6v3.1h2.7v7.9z"'
+        ' fill="currentColor" stroke="none"/>'),
     "x": (
         '<path d="M3.2 3.2h3.9l4.6 6.1 5.3-6.1h2.1l-6.4 7.4 6.9 9.2h-3.9l-4.9-6.5-5.6 6.5H3.1l7-8.1z"'
         ' fill="currentColor" stroke="none"/>'),
@@ -370,7 +374,7 @@ def footer_block(p):
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2026 Sur Finanzas Group S.A. · CUIT 30-71740402-1</p>
+      <p>© 2026 Sur Finanzas</p>
       <p class="footer-legal">Sur Finanzas ofrece servicios financieros y de custodia de valores conforme a la normativa vigente, y no se encuentra autorizada a operar como entidad financiera regulada por el BCRA salvo donde se indique expresamente para cada línea de negocio.</p>
     </div>
   </div>
