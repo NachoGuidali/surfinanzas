@@ -41,11 +41,13 @@ SUCURSAL = {
     "titulo": "Dónde encontrarnos",
     "bajada": "Plaza Canning, Buenos Aires.",
     "direccion": "Plaza Canning, locales 112 y 113 — Canning, Buenos Aires",
-    "horario": "A partir de las 10 hs",
+    "horario": "De 10 a 20 hs",
     # El mapa se embebe por búsqueda de Google Maps: es interactivo y no
     # necesita API key. Con la dirección exacta o "lat,lng" el pin cae justo.
-    "mapa_query": "Plaza Canning, Canning, Buenos Aires, Argentina",
-    "mapa_link": "https://maps.app.goo.gl/o8fyNTN28JGUyiCj7",
+    # Ficha oficial del negocio en Google Maps ("Sur Finanzas Canning",
+    # -34.8605198, -58.5033275): así el pin cae en el local y se ve la ficha.
+    "mapa_query": "Sur Finanzas Canning",
+    "mapa_link": "https://maps.app.goo.gl/hcoep36tppY6rXVj6",
 }
 
 
@@ -70,6 +72,8 @@ REDES = [
      "url": "https://x.com/surfinanzas"},
     {"clave": "youtube",   "nombre": "YouTube",   "usuario": "@surfinanzas",
      "url": "https://www.youtube.com/@surfinanzas"},
-    # Para sumar otra red: agregá acá su línea (el ícono de TikTok sigue
-    # disponible en ICONOS_RED, dentro de plantilla.py).
+    {"clave": "tiktok",    "nombre": "TikTok",    "usuario": "@surfinanzasok",
+     "url": "https://www.tiktok.com/@surfinanzasok"},
+    {"clave": "linkedin",  "nombre": "LinkedIn",  "usuario": "Sur Finanzas",
+     "url": "https://www.linkedin.com/company/sur-finanzas"},
 ]

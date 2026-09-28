@@ -2340,6 +2340,11 @@ a.red-x:hover .red-icono {
   background: rgba(255, 255, 255, 0.1);
   color: #FFFFFF;
 }
+a.red-linkedin:hover .red-icono {
+  border-color: #0A66C2;
+  background: rgba(10, 102, 194, 0.16);
+  color: #4D9BE8;
+}
 a.red-youtube:hover .red-icono {
   border-color: #FF0033;
   background: rgba(255, 0, 51, 0.14);

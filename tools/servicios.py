@@ -95,9 +95,9 @@ SERVICIOS = [
         "nombre": "Microcréditos para emprendedores",
         "nombre_corto": "Microcréditos",
         "icono": "microcreditos",
-        # Foto del local con la marca nueva.
         "imagen": "assets/servicios/microcreditos.jpg",
-        "imagen_alt": "Una clienta completando una solicitud de crédito con una asesora de Sur Finanzas en el mostrador",
+        "imagen_alt": "Una clienta firmando su solicitud de crédito junto a una asesora "
+                      "de Sur Finanzas",
         "titulo": "El crédito que te banca",
         # El video va entre "Para quién es" y "Cómo se hace".
         "orden": ["puntos", "publico", "video", "proceso", "secciones",
@@ -177,9 +177,9 @@ SERVICIOS = [
         "nombre": "Compra y gestión de cheques y Echeq",
         "nombre_corto": "Cheques y Echeq",
         "icono": "cheques",
-        # Ilustración propia (SVG) hasta que haya una foto real.
-        "imagen": "assets/servicios/cheques-y-echeques.svg",
-        "imagen_alt": "Ilustración de un cheque en papel y un cheque electrónico aprobado",
+        "imagen": "assets/servicios/cheques-y-echeques.jpg",
+        "imagen_alt": "Una asesora de Sur Finanzas mostrándole a un cliente un Echeq "
+                      "acreditado en la tablet",
         "titulo": "Convertí tus cheques en plata hoy",
         "gancho": "Liquidez inmediata para tu negocio.",
         "resumen": "Descuento y liquidación de cheques físicos y electrónicos, con tasas preferenciales.",
@@ -287,9 +287,9 @@ SERVICIOS = [
         "nombre": "Medios de Pago & Cobranzas",
         "nombre_corto": "Medios de pago",
         "icono": "pagos",
-        # Ilustración propia (SVG) hasta que haya una foto real.
-        "imagen": "assets/servicios/medios-de-pago.svg",
-        "imagen_alt": "Ilustración de una terminal de cobro, una tarjeta y un código QR",
+        "imagen": "assets/servicios/medios-de-pago.jpg",
+        "imagen_alt": "Una clienta apoyando su tarjeta en una terminal de cobro de Sur Finanzas, "
+                      "con el cartel de QR al lado",
         "titulo": "Optimizá cómo cobra tu negocio",
         "gancho": "Cobranzas integrales.",
         "resumen": "Soluciones de cobro para optimizar la facturación de tu negocio o comercio.",
@@ -305,6 +305,29 @@ SERVICIOS = [
             ("Mejores ingresos",
              "El objetivo es que entre más y entre mejor."),
         ],
+        "orden": ["puntos", "bloques"],
+        # PROVISORIO igual que los puntos de arriba: confirmar qué medios de
+        # cobro se ofrecen realmente antes de publicar.
+        "bloques": [
+            {
+                "layout": "imagen-derecha",
+                "fondo": "alt",
+                "titulo": "Que nadie se vaya sin poder pagar",
+                "descripcion": "Tu comercio cobra por donde el cliente prefiera, y todo "
+                               "queda en un mismo circuito.",
+                "items": [
+                    "QR para cobrar desde cualquier billetera",
+                    "Terminal para tarjetas de débito y crédito",
+                    "Pago sin contacto con tarjeta o celular",
+                    "Cobros registrados y fáciles de conciliar",
+                ],
+                "cta": "Consultá por medios de pago",
+                "wa": "Hola Sur Finanzas, quiero información sobre medios de pago y cobranzas.",
+                "imagen": "assets/servicios/medios-de-pago-1.jpg",
+                "imagen_alt": "Una clienta pagando con el celular en el mostrador de un café, "
+                              "con la terminal y el QR de Sur Finanzas",
+            },
+        ],
         "cta": "Consultá por medios de pago",
         "wa": "Hola Sur Finanzas, quiero información sobre medios de pago y cobranzas.",
     },
@@ -313,7 +336,8 @@ SERVICIOS = [
         "nombre": "Compra y venta de oro",
         "icono": "oro",
         "imagen": "assets/servicios/compra-y-venta-de-oro.jpg",
-        "imagen_alt": "Lingotes y monedas de oro sobre fondo oscuro, con la curva de la cotización detrás",
+        "imagen_alt": "Una tasadora de Sur Finanzas con guantes sosteniendo un lingote de oro "
+                      "junto a una moneda, sobre la bandeja de tasación",
         "titulo": "Oro: un valor que se puede tocar",
         "gancho": "Tasación en el acto, pago inmediato.",
         "resumen": "Compra y venta de oro físico: lingotes, monedas y oro usado.",
@@ -420,11 +444,10 @@ SERVICIOS = [
             {
                 "eyebrow": "Opciones",
                 "titulo": "Tamaños disponibles",
-                "bajada": "Tres tamaños, según lo que necesites resguardar.",
+                "bajada": "Dos tamaños, según lo que necesites resguardar.",
                 "fondo": "alt",
                 "tarjetas": [
                     ("Chica", "Documentos, alhajas, objetos pequeños de valor."),
-                    ("Mediana", "Contratos, colecciones, resguardo familiar."),
                     ("Grande", "Empresas o patrimonios que requieren mayor volumen."),
                 ],
             },
@@ -483,10 +506,11 @@ SERVICIOS = [
         "orden": ["video", "bloques"],
 
         "video": {
-            "titulo": "Así trabajamos",
-            "bajada": "Mirá cómo operamos, en video.",
+            "eyebrow": "Surfi en acción",
+            "titulo": "Mirá cómo trabajamos",
             "archivo": "assets/servicios/caudales.mp4",
             "poster": "assets/servicios/caudales-poster.jpg",
+            "sin_sonido": True,      # arranca en silencio; se puede activar
         },
         "bloques": [
             {
@@ -505,7 +529,7 @@ SERVICIOS = [
                 "cta": "Cotizá tu servicio de caudales",
                 "wa": "Hola Sur Finanzas, quiero cotizar un servicio de transporte de caudales.",
                 "imagen": "assets/servicios/transporte-de-caudales-1.jpg",
-                "imagen_alt": "Camión blindado de Sur Finanzas",
+                "imagen_alt": "Camión blindado de Sur Finanzas circulando por la ciudad",
             },
             {
                 "layout": "imagen-derecha",
@@ -525,9 +549,9 @@ SERVICIOS = [
                 ],
                 "cta": "Cotizá tu servicio de custodia",
                 "wa": "Hola Sur Finanzas, quiero cotizar un servicio de custodia de mercadería.",
-                "imagen": "",
-                "imagen_alt": "",
-                "foto_titulo": "Foto del camión de carga",
+                "imagen": "assets/servicios/transporte-de-caudales-2.jpg",
+                "imagen_alt": "Custodios de Sur Finanzas coordinando la salida de un camión "
+                              "de carga en un depósito",
             },
         ],
         "cta": "Cotizá tu servicio",

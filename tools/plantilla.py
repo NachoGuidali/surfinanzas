@@ -70,6 +70,12 @@ ICONOS_RED = {
     "x": (
         '<path d="M3.2 3.2h3.9l4.6 6.1 5.3-6.1h2.1l-6.4 7.4 6.9 9.2h-3.9l-4.9-6.5-5.6 6.5H3.1l7-8.1z"'
         ' fill="currentColor" stroke="none"/>'),
+    "linkedin": (
+        '<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="4.6"/>'
+        '<circle cx="7.6" cy="7.9" r="1.2" fill="currentColor" stroke="none"/>'
+        '<path d="M7.6 10.8V17"/>'
+        '<path d="M11.7 17v-6.2"/>'
+        '<path d="M11.7 13.6a2.6 2.6 0 0 1 5.2 0V17"/>'),
     "youtube": (
         '<rect x="2.3" y="5.4" width="19.4" height="13.2" rx="4"/>'
         '<path d="M10.3 9.3l5 2.7-5 2.7z" fill="currentColor" stroke="none"/>'),

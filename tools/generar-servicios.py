@@ -406,18 +406,21 @@ def seccion_video(s):
         return ""
     if v.get("archivo"):
         contenido = (f'<video controls playsinline preload="metadata"'
+                     + (' muted' if v.get("sin_sonido") else "")
                      + (f' poster="../{e(v["poster"])}"' if v.get("poster") else "")
                      + f'><source src="../{e(v["archivo"])}" type="video/mp4" /></video>')
     else:
         contenido = (f'<div class="foto-placeholder">{ICONO_PLAY}'
                      f'<p class="fp-titulo">{e(v.get("estado", "Video en producción"))}</p></div>')
 
+    # La bajada es opcional: sin ella no se deja un párrafo vacío
+    bajada = f'\n      <p>{e(v["bajada"])}</p>' if v.get("bajada") else ""
+
     return f'''<section class="section">
   <div class="container">
     <div class="section-heading center" data-reveal>
-      <p class="eyebrow">En video</p>
-      <h2>{e(v["titulo"])}</h2>
-      <p>{e(v["bajada"])}</p>
+      <p class="eyebrow">{e(v.get("eyebrow", "En video"))}</p>
+      <h2>{e(v["titulo"])}</h2>{bajada}
     </div>
     <figure class="marco-video{' vertical' if v.get('vertical') else ''} mt-4" data-reveal="scale">{contenido}</figure>
   </div>
