@@ -41,7 +41,7 @@ CANAL_BAJADA = ("Novedades, cotizaciones y avisos, primero por el canal. "
 SUCURSAL = {
     "titulo": "Dónde encontrarnos",
     "bajada": "Plaza Canning, Buenos Aires.",
-    "direccion": "Plaza Canning, locales 112 y 113 — Canning, Buenos Aires",
+    "direccion": "Plaza Canning, local 112 — Canning, Buenos Aires",
     "horario": "De 10 a 20 hs",
     # El mapa se embebe por búsqueda de Google Maps: es interactivo y no
     # necesita API key. Con la dirección exacta o "lat,lng" el pin cae justo.

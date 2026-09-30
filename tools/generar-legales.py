@@ -43,8 +43,6 @@ def lista(items):
 
 TERMINOS = [
     ("Quiénes somos", [
-        p(f"Este sitio es operado por <strong>{RAZON_SOCIAL}</strong>, CUIT {CUIT}, "
-          f"con domicilio legal en {DOMICILIO}. En adelante, “Sur Finanzas”."),
         p("Al navegar el sitio aceptás estos términos. Si no estás de acuerdo con "
           "alguno, te pedimos que no lo uses."),
     ]),
@@ -128,9 +126,6 @@ TERMINOS = [
 
 PRIVACIDAD = [
     ("Quién es responsable de tus datos", [
-        p(f"<strong>{RAZON_SOCIAL}</strong>, CUIT {CUIT}, con domicilio legal en "
-          f"{DOMICILIO}, es responsable de la base de datos en la que se guardan los "
-          f"datos personales recogidos en este sitio."),
         p(f'Para cualquier tema de privacidad podés escribir a '
           f'<a href="mailto:{MAIL_LEGALES}">{MAIL_LEGALES}</a>.'),
     ]),
