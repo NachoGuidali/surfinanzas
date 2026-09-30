@@ -20,7 +20,6 @@ import empresa as E
 import plantilla as T
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ARCHIVO = "links.html"
 
 TITULO = "Sur Finanzas — Links"
 DESCRIPCION = ("Todos los links de Sur Finanzas en un solo lugar: Instagram, "
@@ -60,7 +59,13 @@ def boton(url, icono, titulo, detalle, clase=""):
       </a>'''
 
 
-def enlaces():
+def wa(numero, texto):
+    """Link de WhatsApp a un número suelto (el de cada QR)."""
+    import urllib.parse
+    return f"https://wa.me/{numero}?text=" + urllib.parse.quote(texto)
+
+
+def enlaces_generales():
     filas = []
     ig = red("instagram")
     if ig:
@@ -75,24 +80,31 @@ def enlaces():
     return "\n".join(filas)
 
 
-PAGINA = f'''<!DOCTYPE html>
+def enlace_whatsapp(numero, display, titulo, texto):
+    """Un solo botón de WhatsApp, para los QR de cada línea."""
+    return boton(wa(numero, texto), T.WA_ICON, titulo,
+                 f"Escribinos al {display}", "es-whatsapp")
+
+
+def pagina(slug, titulo, descripcion, subtitulo, enlaces):
+    return f'''<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{e(TITULO)}</title>
-<meta name="description" content="{e(DESCRIPCION)}" />
+<title>{e(titulo)}</title>
+<meta name="description" content="{e(descripcion)}" />
 <link rel="icon" href="assets/branding/favicon.ico" sizes="any" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/branding/favicon-32.png" />
 <link rel="apple-touch-icon" href="assets/branding/apple-touch-icon.png" />
 <meta name="theme-color" content="#0b0b0f" />
-<link rel="canonical" href="{E.SITE}/links" />
+<link rel="canonical" href="{E.SITE}/{slug}" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Sur Finanzas" />
 <meta property="og:locale" content="es_AR" />
-<meta property="og:title" content="{e(TITULO)}" />
-<meta property="og:description" content="{e(DESCRIPCION)}" />
-<meta property="og:url" content="{E.SITE}/links" />
+<meta property="og:title" content="{e(titulo)}" />
+<meta property="og:description" content="{e(descripcion)}" />
+<meta property="og:url" content="{E.SITE}/{slug}" />
 <meta property="og:image" content="{E.SITE}/assets/branding/og-image.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -182,6 +194,16 @@ PAGINA = f'''<!DOCTYPE html>
     85%  {{ transform: translateY(1px) rotate(-6deg); }}
   }}
 
+  /* El nombre de la línea, en las páginas de un solo QR */
+  .titulo {{ margin: -0.5rem 0 1.6rem; }}
+  .titulo h1 {{
+    margin: 0;
+    font-size: clamp(1.6rem, 6vw, 2.1rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }}
+  .titulo .bajada {{ margin: 0.35rem 0 0; color: var(--tenue); font-size: 0.95rem; }}
+
   .enlaces {{ display: grid; gap: 0.85rem; }}
 
   .enlace {{
@@ -253,9 +275,9 @@ PAGINA = f'''<!DOCTYPE html>
   <img class="logo" src="assets/branding/logo-sur.svg" alt="Sur Finanzas" width="399" height="155" />
 
   <p class="surfi-pill">{E.CANAL_TAGLINE.replace("🏄", '<span class="surfi" role="img" aria-label="surfista">🏄</span>')}</p>
-
+{subtitulo}
   <div class="enlaces">
-{enlaces()}
+{enlaces}
   </div>
 
   <p class="pie">
@@ -268,7 +290,48 @@ PAGINA = f'''<!DOCTYPE html>
 '''
 
 
+def titulo_seccion(texto, detalle=""):
+    """El nombre de la línea, arriba de los botones."""
+    bajada = f'\n    <p class="bajada">{e(detalle)}</p>' if detalle else ""
+    return f'\n  <div class="titulo">\n    <h1>{e(texto)}</h1>{bajada}\n  </div>\n'
+
+
+# Cada entrada genera un archivo. Los QR apuntan a surfinanzas.com.ar/<slug>.
+PAGINAS = [
+    {
+        "slug": "links",
+        "titulo": TITULO,
+        "descripcion": DESCRIPCION,
+        "subtitulo": "",
+        "enlaces": enlaces_generales,
+    },
+    {
+        "slug": "qrmicrocreditos",
+        "titulo": "Microcréditos — Sur Finanzas",
+        "descripcion": "Escribinos por WhatsApp y pedí tu microcrédito para "
+                       "emprendedores y comercios.",
+        "subtitulo": titulo_seccion("Microcréditos",
+                                    "Para emprendedores y comercios"),
+        "enlaces": lambda: enlace_whatsapp(
+            "5491130533039", "+54 9 11 3053-3039", "Pedí tu microcrédito",
+            "Hola Sur Finanzas, quiero pedir un microcrédito."),
+    },
+    {
+        "slug": "qrlineadecaja",
+        "titulo": "Línea de caja — Sur Finanzas",
+        "descripcion": "Escribinos por WhatsApp por la línea de caja de Sur Finanzas.",
+        "subtitulo": titulo_seccion("Línea de caja"),
+        "enlaces": lambda: enlace_whatsapp(
+            "5491176743162", "+54 9 11 7674-3162", "Escribinos por WhatsApp",
+            "Hola Sur Finanzas, quiero consultar por la línea de caja."),
+    },
+]
+
+
 if __name__ == "__main__":
-    with open(os.path.join(ROOT, ARCHIVO), "w", encoding="utf-8") as fh:
-        fh.write(PAGINA)
-    print(f"  ✓ {ARCHIVO}")
+    for p_ in PAGINAS:
+        archivo = f'{p_["slug"]}.html'
+        with open(os.path.join(ROOT, archivo), "w", encoding="utf-8") as fh:
+            fh.write(pagina(p_["slug"], p_["titulo"], p_["descripcion"],
+                            p_["subtitulo"], p_["enlaces"]()))
+        print(f"  ✓ {archivo}")
