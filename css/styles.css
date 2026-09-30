@@ -1858,7 +1858,9 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
 
 .marco-video {
   position: relative;
-  margin: 0 auto;
+  /* "margin-inline" y no "margin": con el atajo se perdía el margen de
+     arriba que trae la clase mt-4, y el título quedaba pegado al video. */
+  margin-inline: auto;
   max-width: 52rem;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -1877,6 +1879,9 @@ input[type="range"] { accent-color: var(--brand); width: 100%; }
    selectores, descarta la regla entera. */
 .marco-video video:fullscreen { object-fit: contain; background: #000; }
 .marco-video video:-webkit-full-screen { object-fit: contain; background: #000; }
+/* Un poco más de aire entre el título y el video que debajo de otras secciones */
+.section-heading + .marco-video { margin-top: 3rem; }
+
 /* Videos grabados para celular (9:16): centrados y sin recortar.
    Lo más grande posible sin pasar el 85% del alto de la pantalla,
    para que se vea entero sin scrollear. */
