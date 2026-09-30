@@ -16,6 +16,7 @@ SITE = "https://www.surfinanzas.com.ar"
 # --- WhatsApp de atención -------------------------------------------------
 # Es el de todos los botones e íconos de WhatsApp del sitio.
 WA_NUMERO = "5491164827010"             # para wa.me: sin +, ni espacios, ni guiones
+WA_DISPLAY = "+54 9 11 6482-7010"       # como se escribe en pantalla
 
 _WA_TEXTO = "?text=Hola%20Sur%20Finanzas%2C%20quiero%20hacer%20una%20consulta."
 WA = f"https://wa.me/{WA_NUMERO}{_WA_TEXTO}"
