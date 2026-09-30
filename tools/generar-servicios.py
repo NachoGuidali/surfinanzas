@@ -348,6 +348,11 @@ def secciones(s):
     </div>{tarjetas}
   </div>
 </section>''')
+
+        # Una sección puede pedir que el video venga justo después de ella.
+        # Así el video queda pegado a su tema, y no al final de la página.
+        if sec.get("video_despues") and s.get("video"):
+            salida.append(seccion_video(s))
     return "\n\n".join(salida)
 
 

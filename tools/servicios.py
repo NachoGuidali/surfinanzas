@@ -189,7 +189,7 @@ SERVICIOS = [
         # El contenido vive en las secciones de abajo, más específicas que la
         # grilla genérica de "En detalle".
         "puntos": [],
-        "orden": ["proceso", "secciones", "publico", "app", "video", "atencion"],
+        "orden": ["proceso", "video", "secciones", "publico", "app", "atencion"],
 
         "proceso": {
             "titulo": "Cómo funciona",
@@ -344,7 +344,8 @@ SERVICIOS = [
                        "en una pantalla ni depende de nadie más.",
         "foto_titulo": "Foto: lingotes y monedas de oro",
         "puntos": [],
-        "orden": ["secciones", "video", "publico", "ubicacion"],
+        # El video lo ubica "video_despues", dentro de "Cómo funciona"
+        "orden": ["secciones", "publico", "ubicacion"],
 
         "video": {
             "eyebrow": "Te lo cuenta Ariel",
@@ -368,6 +369,7 @@ SERVICIOS = [
                      "confirmamos la cotización exacta en el momento de la operación, sin "
                      "valores de referencia desactualizados."),
                 ],
+                "video_despues": True,
             },
             {
                 "eyebrow": "Qué operamos",
