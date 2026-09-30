@@ -55,7 +55,8 @@ def sucursal_datos():
     """Los datos en el formato (rótulo, valor[, enlace]) que espera el render."""
     return [
         ("Dirección", SUCURSAL["direccion"]),
-        ("Teléfono", TEL_DISPLAY, "tel:" + TEL_E164),
+        # El número de la sucursal se atiende por WhatsApp, no por llamada.
+        ("WhatsApp", TEL_DISPLAY, WA_SUCURSAL),
         ("Horario", SUCURSAL["horario"]),
     ]
 

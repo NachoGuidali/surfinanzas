@@ -179,7 +179,9 @@ def sucursal_block(eyebrow="La sucursal", cta="Hablanos", wa=None, fondo="alt"):
     def fila(d):
         titulo, valor = d[0], d[1]
         enlace = d[2] if len(d) > 2 else None
-        cuerpo = f'<a href="{e(enlace)}">{e(valor)}</a>' if enlace else e(valor)
+        # Los enlaces que salen del sitio (WhatsApp) se abren en otra pestaña
+        externo = ' target="_blank" rel="noopener"' if (enlace or "").startswith("http") else ""
+        cuerpo = f'<a href="{e(enlace)}"{externo}>{e(valor)}</a>' if enlace else e(valor)
         return ('        <div class="dato">\n'
                 f'          <p class="eyebrow">{e(titulo)}</p>\n'
                 f'          <p class="muted">{cuerpo}</p>\n'

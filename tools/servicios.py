@@ -259,12 +259,11 @@ SERVICIOS = [
             ],
         },
 
-        # Cuando esté el video, cargar "archivo" (y opcionalmente "poster").
         "video": {
-            "titulo": "Video",
-            "bajada": "Mirá el paso a paso en video.",
-            "estado": "Video en producción",
-            "archivo": "",
+            "eyebrow": "Te lo cuenta Ariel",
+            "titulo": "Cheques y Echeq, explicados",
+            "archivo": "assets/servicios/cheques.mp4",
+            "poster": "assets/servicios/cheques-poster.jpg",
         },
 
         # Banner de WhatsApp debajo del video. "numero" es PROVISORIO: vacío
@@ -345,7 +344,14 @@ SERVICIOS = [
                        "en una pantalla ni depende de nadie más.",
         "foto_titulo": "Foto: lingotes y monedas de oro",
         "puntos": [],
-        "orden": ["secciones", "publico", "ubicacion"],
+        "orden": ["secciones", "video", "publico", "ubicacion"],
+
+        "video": {
+            "eyebrow": "Te lo cuenta Ariel",
+            "titulo": "Cómo comprar y vender oro con nosotros",
+            "archivo": "assets/servicios/oro.mp4",
+            "poster": "assets/servicios/oro-poster.jpg",
+        },
 
         "secciones": [
             {
