@@ -75,6 +75,9 @@ def enlaces_generales():
     filas.append(boton(E.WA, T.WA_ICON, "WhatsApp",
                        f"Escribinos al {E.WA_DISPLAY}", "es-whatsapp"))
 
+    filas.append(boton(E.CANAL_URL, T.CANAL_ICONO, "Canal de WhatsApp",
+                       f"{E.CANAL_NOMBRE} · novedades y avisos", "es-canal"))
+
     filas.append(boton(RESENA, ICONO_ESTRELLA, "Dejanos tu reseña",
                        "Contanos cómo te atendimos en Google", "es-resena"))
     return "\n".join(filas)
@@ -251,6 +254,8 @@ def pagina(slug, titulo, descripcion, subtitulo, enlaces):
   .es-instagram:hover .enlace-icono {{ border-color: #E1306C; background: rgba(225, 48, 108, 0.14); color: #FF6E9C; }}
   .es-whatsapp .enlace-icono {{ color: var(--wa); }}
   .es-whatsapp:hover .enlace-icono {{ border-color: var(--wa); background: rgba(37, 211, 102, 0.14); }}
+  .es-canal .enlace-icono {{ color: var(--wa); }}
+  .es-canal:hover .enlace-icono {{ border-color: var(--wa); background: rgba(37, 211, 102, 0.14); }}
   .es-resena .enlace-icono {{ color: #FFC33D; }}
   .es-resena:hover .enlace-icono {{ border-color: #FFC33D; background: rgba(255, 195, 61, 0.14); }}
 
