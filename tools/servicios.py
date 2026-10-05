@@ -108,6 +108,7 @@ SERVICIOS = [
             "archivo": "assets/servicios/microcreditos.mp4",
             "poster": "assets/servicios/microcreditos-poster.jpg",
             "vertical": True,        # grabado para celular (9:16)
+            "oculto": True,          # sacá esta línea para volver a mostrarlo
         },
         "gancho": "Requisitos mínimos, aprobación rápida.",
         "resumen": "Financiación ágil para mercadería, herramientas o capital de trabajo.",
@@ -264,6 +265,7 @@ SERVICIOS = [
             "titulo": "Cheques y Echeq, explicados",
             "archivo": "assets/servicios/cheques.mp4",
             "poster": "assets/servicios/cheques-poster.jpg",
+            "oculto": True,          # sacá esta línea para volver a mostrarlo
         },
 
         # Banner de WhatsApp debajo del video. "numero" es PROVISORIO: vacío
@@ -352,6 +354,7 @@ SERVICIOS = [
             "titulo": "Cómo comprar y vender oro con nosotros",
             "archivo": "assets/servicios/oro.mp4",
             "poster": "assets/servicios/oro-poster.jpg",
+            "oculto": True,          # sacá esta línea para volver a mostrarlo
         },
 
         "secciones": [

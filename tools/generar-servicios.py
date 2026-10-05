@@ -407,7 +407,9 @@ def seccion_app(s):
 
 def seccion_video(s):
     v = s.get("video")
-    if not v:
+    # "oculto" saca la sección de la página sin perder la configuración:
+    # para volver a mostrarla alcanza con sacar esa línea.
+    if not v or v.get("oculto"):
         return ""
     if v.get("archivo"):
         contenido = (f'<video controls playsinline preload="metadata"'
